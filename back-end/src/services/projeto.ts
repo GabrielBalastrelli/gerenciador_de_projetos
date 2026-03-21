@@ -1,4 +1,4 @@
-import { Projeto, PrismaClient } from '@prisma/client';
+import { Projeto, PrismaClient, Empregado } from '@prisma/client';
 import { ProjetoData, IProjetoRepo } from '../interfaces/interfaceProjeto';
 
 const prisma = new PrismaClient();
@@ -36,6 +36,16 @@ export class useProjeto implements IProjetoRepo {
       where: {
         id_projeto: idProjeto,
       },
+    });
+  }
+
+  async findAll(): Promise<Projeto[]> {
+    return await prisma.projeto.findMany();
+  }
+
+  async findId(idProjeto: string): Promise<Projeto | null> {
+    return await prisma.projeto.findUnique({
+      where: { id_projeto: idProjeto },
     });
   }
 }
