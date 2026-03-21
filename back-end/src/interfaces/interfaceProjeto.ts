@@ -10,7 +10,7 @@ export type ProjetoData = {
 
 export interface IProjetoRepo {
   create(data: ProjetoData | Omit<Projeto, 'id_projeto'>): Promise<Projeto>;
-  delete(idProjeto: string): void;
+  delete(idProjeto: string): Promise<void>;
   update(idProjeto: string, data: ProjetoData): Promise<Projeto>;
   findAll(): Promise<Empregado>;
   findId(idProjeto: string): Promise<Projeto>;
