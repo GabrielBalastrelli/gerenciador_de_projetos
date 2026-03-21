@@ -1,0 +1,55 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Empregado {
+  id_empregado String   @id @default(uuid())
+  ds_nome      String
+  ds_email     String   @unique
+  dt_nascimento DateTime
+  ds_profissao String
+  vl_salario   Float
+  dt_admissao  DateTime @default(now())
+  dt_transacao DateTime @default(now())
+
+  demandas     Demanda[]
+
+  id_projeto   String
+  projeto      Projeto @relation(fields: [id_projeto], references: [id_projeto])
+
+  @@index([ds_nome])
+  @@index([ds_email])
+}
+
+model Projeto {
+  id_projeto    String     @id @default(uuid())
+  ds_nome       String
+  ds_descricao  String
+  orcamento     Float
+  dt_inicio     DateTime
+  dt_fim        DateTime
+  dt_transacao  DateTime   @default(now())
+
+  empregados    Empregado[]
+  demandas      Demanda[]
+
+  @@index([ds_nome])
+}
+
+model Demanda {
+  id_demanda   String    @id @default(uuid())
+  id_projeto   String
+  id_empregado String
+  ds_nome      String
+  ds_descricao String
+  dt_inicio    DateTime
+  dt_fim       DateTime
+  dt_transacao DateTime @default(now())     
+
+  projeto      Projeto   @relation(fields: [id_projeto], references: [id_projeto])
+  empregado    Empregado @relation(fields: [id_empregado], references: [id_empregado])
+}
