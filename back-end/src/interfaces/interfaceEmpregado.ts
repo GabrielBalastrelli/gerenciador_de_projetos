@@ -14,6 +14,6 @@ export interface IEmpregadoRepo {
   findAll(): Promise<Empregado[]>;
   findById(empregadoId: string): Promise<Empregado | null>;
   create(data: EmpregadoData | Omit<Empregado, 'id_empregado'>): Promise<Empregado>;
-  update(id: string, data: Partial<Empregado>): Promise<Empregado>;
-  delete(id: string): Promise<void>;
+  update(empregadoId: string, data: Partial<Empregado>): Promise<Empregado>;
+  delete(empregadoId: string): Promise<void>;
 }
