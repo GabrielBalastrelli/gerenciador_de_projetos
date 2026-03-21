@@ -1,7 +1,6 @@
 import { Demanda } from '@prisma/client';
 
 export type DemandaData = {
-  id_projeto: string;
   id_empregado: string;
   ds_nome: string;
   ds_descricao: string;
