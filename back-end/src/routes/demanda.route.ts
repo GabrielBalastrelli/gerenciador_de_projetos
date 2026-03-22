@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import ControllerDemanda from '../controllers/demandaController';
 
-const router = Router();
+const demandaRouter = Router();
 const controller = new ControllerDemanda();
 
-router.post('/', controller.create.bind(controller));
+demandaRouter.post('/', controller.create.bind(controller));
 
-router.delete('/:id', controller.delete.bind(controller));
+demandaRouter.delete('/:id', controller.delete.bind(controller));
 
-router.put('/:id', controller.update.bind(controller));
+demandaRouter.put('/:id', controller.update.bind(controller));
 
-router.get('/', controller.findAll.bind(controller));
+demandaRouter.get('/', controller.findAll.bind(controller));
 
-router.get('/:id', controller.findId.bind(controller));
+demandaRouter.get('/:id', controller.findId.bind(controller));
 
-export default router;
+export default demandaRouter;
