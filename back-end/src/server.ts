@@ -1,17 +1,13 @@
 import express from 'express';
-
-import Controllers from './controllers/controller';
+import { errorHandler } from './services/appError';
 
 const app = express();
 const PORT = 3000;
 
+app.use(errorHandler);
+
 app.get('/', (req: any, res: any) => {
   res.send('Hello World!');
-});
-
-app.get('/cadastarUsuario', (req: any, res: any) => {
-  const controllers = new Controllers("cadastarUsuario");
-  res.send(controllers->);
 });
 
 app.listen(PORT, () => {
