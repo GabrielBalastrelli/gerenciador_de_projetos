@@ -3,7 +3,7 @@ import { ProjetoData, IProjetoRepo } from '../interfaces/interfaceProjeto';
 
 const prisma = new PrismaClient();
 
-export class useProjeto implements IProjetoRepo {
+export class UseProjeto implements IProjetoRepo {
   async create(data: ProjetoData | Omit<Projeto, 'id_projeto'>): Promise<Projeto> {
     return await prisma.projeto.create({
       data: {
