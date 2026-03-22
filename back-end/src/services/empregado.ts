@@ -1,7 +1,7 @@
-import { Empregado, PrismaClient } from '@prisma/client';
+import { Empregado } from '@prisma/client';
 import { IEmpregadoRepo, EmpregadoData } from '../interfaces/interfaceEmpregado';
 
-const prisma = new PrismaClient();
+import { prisma } from '../prisma.config';
 
 export class UseEmpregado implements IEmpregadoRepo {
   async create(data: EmpregadoData | Omit<Empregado, 'id_empregado'>): Promise<Empregado> {

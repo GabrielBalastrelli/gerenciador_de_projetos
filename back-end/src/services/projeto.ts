@@ -1,10 +1,10 @@
-import { Projeto, PrismaClient, Empregado } from '@prisma/client';
+import { Projeto, Empregado } from '@prisma/client';
 import { ProjetoData, IProjetoRepo } from '../interfaces/interfaceProjeto';
 
-const prisma = new PrismaClient();
-
+import { prisma } from '../prisma.config';
 export class UseProjeto implements IProjetoRepo {
   async create(data: ProjetoData | Omit<Projeto, 'id_projeto'>): Promise<Projeto> {
+    console.log(data);
     return await prisma.projeto.create({
       data: {
         ds_nome: data.ds_nome,

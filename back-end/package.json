@@ -13,6 +13,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
     "express": "^5.2.1",
     "prettier": "^3.8.1",

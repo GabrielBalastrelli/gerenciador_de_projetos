@@ -6,6 +6,7 @@ export default class ControllerEmpregado {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log(req.body);
       const empregado = await this.empregado.create(req.body);
       res.status(201).json(empregado);
     } catch (error) {

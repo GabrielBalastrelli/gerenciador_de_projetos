@@ -1,7 +1,6 @@
-import { Demanda, PrismaClient } from '@prisma/client';
+import { Demanda } from '@prisma/client';
 import { DemandaData, IDemandaRepo } from '../interfaces/interfaceDemanda';
-
-const prisma = new PrismaClient();
+import { prisma } from '../prisma.config';
 
 export class UseDemanda implements IDemandaRepo {
   async create(data: DemandaData | Omit<Demanda, 'id_demanda'>): Promise<Demanda> {
