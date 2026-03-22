@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ControllerDemanda from '../controllers/demandaController';
+import ControllerDemanda from '../controllers/demanda.controller';
 
 const demandaRouter = Router();
 const controller = new ControllerDemanda();
