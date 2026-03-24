@@ -1,7 +1,8 @@
 import { Projeto, Empregado } from '@prisma/client';
 import { ProjetoData, IProjetoRepo } from '../interfaces/interfaceProjeto';
 
-import { prisma } from '../prisma.config';
+import { prisma } from '../database/prisma';
+
 export class UseProjeto implements IProjetoRepo {
   async create(data: ProjetoData | Omit<Projeto, 'id_projeto'>): Promise<Projeto> {
     console.log(data);

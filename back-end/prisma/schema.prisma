@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-}
+ }
 
 generator client {
   provider = "prisma-client-js"
@@ -10,6 +10,9 @@ model Empregado {
   id_empregado String   @id @default(uuid())
   ds_nome      String
   ds_email     String   @unique
+  ds_cpf       String  
+  ds_password  String 
+  role         String @default("USER")
   dt_nascimento DateTime
   ds_profissao String
   vl_salario   Float
