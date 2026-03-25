@@ -21,9 +21,8 @@ model Empregado {
 
   demandas     Demanda[]
 
-  id_projeto   String
-  projeto      Projeto @relation(fields: [id_projeto], references: [id_projeto])
-
+  projeto EmpregadoProjeto[]
+  
   @@index([ds_nome])
   @@index([ds_email])
 }
@@ -37,7 +36,7 @@ model Projeto {
   dt_fim        DateTime
   dt_transacao  DateTime   @default(now())
 
-  empregados    Empregado[]
+  empregados    EmpregadoProjeto[]
   demandas      Demanda[]
 
   @@index([ds_nome])
@@ -55,4 +54,15 @@ model Demanda {
 
   projeto      Projeto   @relation(fields: [id_projeto], references: [id_projeto])
   empregado    Empregado @relation(fields: [id_empregado], references: [id_empregado])
+}
+
+model EmpregadoProjeto {
+  id String @id @default(uuid())
+  id_empregado String 
+  id_projeto String 
+
+  empregado Empregado @relation(fields: [id_empregado], references: [id_empregado])
+  projeto Projeto @relation(fields: [id_projeto], references: [id_projeto])
+
+  @@unique([id_empregado, id_projeto])
 }

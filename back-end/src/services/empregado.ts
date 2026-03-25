@@ -13,7 +13,9 @@ export class UseEmpregado implements IEmpregadoRepo {
         ds_profissao: data.ds_profissao,
         vl_salario: data.vl_salario,
         dt_admissao: data.dt_admissao,
-        id_projeto: data.id_projeto,
+        ds_password: data.ds_password,
+        role: data.role,
+        ds_cpf: data.ds_cpf,
       },
     });
   }
@@ -45,7 +47,9 @@ export class UseEmpregado implements IEmpregadoRepo {
         ds_profissao: data.ds_profissao,
         vl_salario: data.vl_salario,
         dt_admissao: data.dt_admissao,
-        id_projeto: data.id_projeto,
+        ds_password: data.ds_password,
+        role: data.role,
+        ds_cpf: data.ds_cpf,
       },
     });
   }

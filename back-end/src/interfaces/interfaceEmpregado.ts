@@ -7,7 +7,6 @@ export type EmpregadoData = {
   ds_profissao: string;
   vl_salario: number;
   dt_admissao: Date;
-  id_projeto: string;
   role: string;
   ds_password: string;
   ds_cpf: string;
@@ -17,6 +16,6 @@ export interface IEmpregadoRepo {
   findAll(): Promise<Empregado[]>;
   findById(empregadoId: string): Promise<Empregado | null>;
   create(data: EmpregadoData | Omit<EmpregadoData, 'id_empregado'>): Promise<Empregado>;
-  update(empregadoId: string, data: Partial<Empregado>): Promise<Empregado>;
+  update(empregadoId: string, data: Partial<EmpregadoData>): Promise<Empregado>;
   delete(empregadoId: string): Promise<void>;
 }

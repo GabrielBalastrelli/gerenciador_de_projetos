@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UseDemanda = void 0;
-const prisma_config_1 = require("../prisma.config");
+const prisma_1 = require("../database/prisma");
 class UseDemanda {
     async create(data) {
-        return await prisma_config_1.prisma.demanda.create({
+        return await prisma_1.prisma.demanda.create({
             data: {
                 id_projeto: data.id_projeto,
                 id_empregado: data.id_empregado,
@@ -16,7 +16,7 @@ class UseDemanda {
         });
     }
     async update(idDemanda, data) {
-        return await prisma_config_1.prisma.demanda.update({
+        return await prisma_1.prisma.demanda.update({
             where: { id_demanda: idDemanda },
             data: {
                 id_projeto: data.id_projeto,
@@ -29,15 +29,15 @@ class UseDemanda {
         });
     }
     async delete(idDemanda) {
-        await prisma_config_1.prisma.demanda.delete({
+        await prisma_1.prisma.demanda.delete({
             where: { id_demanda: idDemanda },
         });
     }
     async findAll() {
-        return await prisma_config_1.prisma.demanda.findMany();
+        return await prisma_1.prisma.demanda.findMany();
     }
     async findId(idDemanda) {
-        return await prisma_config_1.prisma.demanda.findUnique({
+        return await prisma_1.prisma.demanda.findUnique({
             where: { id_demanda: idDemanda },
         });
     }

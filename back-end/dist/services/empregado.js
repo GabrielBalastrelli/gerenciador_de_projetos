@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UseEmpregado = void 0;
-const prisma_config_1 = require("../prisma.config");
+const prisma_1 = require("../database/prisma");
 class UseEmpregado {
     async create(data) {
-        return await prisma_config_1.prisma.empregado.create({
+        return await prisma_1.prisma.empregado.create({
             data: {
                 ds_nome: data.ds_nome,
                 ds_email: data.ds_email,
@@ -12,27 +12,26 @@ class UseEmpregado {
                 ds_profissao: data.ds_profissao,
                 vl_salario: data.vl_salario,
                 dt_admissao: data.dt_admissao,
-                id_projeto: data.id_projeto,
             },
         });
     }
     async findAll() {
-        return await prisma_config_1.prisma.empregado.findMany();
+        return await prisma_1.prisma.empregado.findMany();
     }
     async findById(empregadoId) {
-        return await prisma_config_1.prisma.empregado.findUnique({
+        return await prisma_1.prisma.empregado.findUnique({
             where: { id_empregado: empregadoId },
         });
     }
     async delete(id) {
-        await prisma_config_1.prisma.empregado.delete({
+        await prisma_1.prisma.empregado.delete({
             where: {
                 id_empregado: id,
             },
         });
     }
     async update(id, data) {
-        return await prisma_config_1.prisma.empregado.update({
+        return await prisma_1.prisma.empregado.update({
             where: { id_empregado: id },
             data: {
                 ds_nome: data.ds_nome,
