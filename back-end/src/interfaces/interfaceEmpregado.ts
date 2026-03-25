@@ -8,6 +8,9 @@ export type EmpregadoData = {
   vl_salario: number;
   dt_admissao: Date;
   id_projeto: string;
+  role: string;
+  ds_password: string;
+  ds_cpf: string;
 };
 
 export interface IEmpregadoRepo {
