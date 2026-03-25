@@ -33,4 +33,14 @@ export class UseEmpregadoProjeto implements IEmpregadoProjetoRepo {
       where: { id: id },
     });
   }
+
+  async findAll(): Promise<EmpregadoProjeto[]> {
+    return await prisma.empregadoProjeto.findMany();
+  }
+
+  async findId(id: string): Promise<EmpregadoProjeto | null> {
+    return await prisma.empregadoProjeto.findUnique({
+      where: { id: id },
+    });
+  }
 }
