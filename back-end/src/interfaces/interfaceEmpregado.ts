@@ -14,8 +14,8 @@ export type EmpregadoData = {
 
 export interface IEmpregadoRepo {
   findAll(): Promise<Empregado[]>;
-  findById(empregadoId: string): Promise<Empregado | null>;
+  findById(id: string): Promise<Empregado | null>;
   create(data: EmpregadoData | Omit<Empregado, 'id_empregado'>): Promise<Empregado>;
-  update(empregadoId: string, data: Partial<EmpregadoData>): Promise<Empregado>;
-  delete(empregadoId: string): Promise<void>;
+  update(id: string, data: Partial<EmpregadoData>): Promise<Empregado>;
+  delete(id: string): Promise<void>;
 }

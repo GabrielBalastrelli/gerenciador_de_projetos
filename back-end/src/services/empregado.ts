@@ -24,9 +24,9 @@ export class UseEmpregado implements IEmpregadoRepo {
     return await prisma.empregado.findMany();
   }
 
-  async findById(empregadoId: string): Promise<Empregado | null> {
+  async findById(id: string): Promise<Empregado | null> {
     return await prisma.empregado.findUnique({
-      where: { id_empregado: empregadoId },
+      where: { id_empregado: id },
     });
   }
 
