@@ -19,4 +19,5 @@ export interface IEmpregadoRepo {
   create(data: EmpregadoData | Omit<Empregado, 'id_empregado'>): Promise<Empregado>;
   update(id: string, data: Partial<EmpregadoData>): Promise<Empregado>;
   delete(id: string): Promise<void>;
+  deleteAll(): Promise<void>;
 }

@@ -23,6 +23,7 @@ export default class ControllerEmpregado {
 
   async delete(req: Request<{ id: string }>, res: Response, next: NextFunction) {
     try {
+      console.log('aaa');
       const { id } = req.params;
       await this.empregado.delete(id);
       res.status(200).send();
@@ -58,6 +59,28 @@ export default class ControllerEmpregado {
         return res.status(401).json({ message: 'Não foi encontrado empregado com id!' });
       }
       res.status(200).json(empregados);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async findByEmail(req: Request<{ ds_email: string }>, res: Response, next: NextFunction) {
+    try {
+      const { ds_email } = req.params;
+
+      const empregado = await this.empregado.findByEmail(ds_email);
+
+      res.status(200).json(empregado);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      await this.empregado.deleteAll();
+
+      res.status(200).json({ message: 'Todos os empregados foram deletados com sucesso!' });
     } catch (error) {
       next(error);
     }

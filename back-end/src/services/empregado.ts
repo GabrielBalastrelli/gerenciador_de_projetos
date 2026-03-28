@@ -61,4 +61,8 @@ export class UseEmpregado implements IEmpregadoRepo {
       where: { ds_email: email },
     });
   }
+
+  async deleteAll(): Promise<void> {
+    await prisma.empregado.deleteMany();
+  }
 }
