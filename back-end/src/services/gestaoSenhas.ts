@@ -11,6 +11,6 @@ export class GestaoSenha implements IGestaoSenha {
   }
 
   async compararSenha(senha: string, senhaLogin: string): Promise<boolean> {
-    return await bcrypt.compare(senha, senhaLogin);
+    return await bcrypt.compare(senhaLogin, senha);
   }
 }

@@ -12,7 +12,6 @@ export class AuthService implements IAuthService {
     if (empregado === null) return false;
 
     const senhaEmpregado = empregado.ds_password;
-
     return await this.GestaoSenhas.compararSenha(senhaEmpregado, senhaLogin);
   }
 }

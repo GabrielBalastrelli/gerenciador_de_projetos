@@ -7,10 +7,16 @@ export default class ControllerEmpregado {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body);
+      const email: string = req.body.ds_email;
 
-      const emailValido = validate(req.body.ds_email);
-      if (!emailValido) {
+      console.log(email);
+
+      const emailValido = await validate({
+        email: email,
+        validateSMTP: false,
+      });
+
+      if (!emailValido.valid) {
         res.status(400).json({ error: 'E-mail inválido'! });
       }
 
@@ -54,11 +60,11 @@ export default class ControllerEmpregado {
   async findId(req: Request<{ id: string }>, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const empregados = await this.empregado.findById(id);
-      if (!empregados) {
+      const empregado = await this.empregado.findById(id);
+      if (!empregado) {
         return res.status(401).json({ message: 'Não foi encontrado empregado com id!' });
       }
-      res.status(200).json(empregados);
+      res.status(200).json(empregado);
     } catch (error) {
       next(error);
     }
@@ -70,12 +76,15 @@ export default class ControllerEmpregado {
 
       const empregado = await this.empregado.findByEmail(ds_email);
 
+      if (!empregado) {
+        res.status(401).json({ message: 'Não foi encontrado empregado com esse e-mail.' });
+      }
+
       res.status(200).json(empregado);
     } catch (error) {
       next(error);
     }
   }
-
   async deleteAll(req: Request, res: Response, next: NextFunction) {
     try {
       await this.empregado.deleteAll();
