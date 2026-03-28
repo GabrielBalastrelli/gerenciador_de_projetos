@@ -1,9 +1,11 @@
 import { Empregado } from '@prisma/client';
 import { IEmpregadoRepo, EmpregadoData } from '../interfaces/interfaceEmpregado';
-
+import { GestaoSenha } from '../services/gestaoSenhas';
 import { prisma } from '../database/prisma';
 
 export class UseEmpregado implements IEmpregadoRepo {
+  private Senha = new GestaoSenha();
+
   async create(data: EmpregadoData | Omit<Empregado, 'id_empregado'>): Promise<Empregado> {
     return await prisma.empregado.create({
       data: {
@@ -13,7 +15,7 @@ export class UseEmpregado implements IEmpregadoRepo {
         ds_profissao: data.ds_profissao,
         vl_salario: data.vl_salario,
         dt_admissao: data.dt_admissao,
-        ds_password: data.ds_password,
+        ds_password: await this.Senha.criptografarSenha(data.ds_password),
         role: data.role,
         ds_cpf: data.ds_cpf,
       },
