@@ -6,7 +6,7 @@ export class AuthService implements IAuthService {
   private Empregado = new UseEmpregado();
   private GestaoSenhas = new GestaoSenha();
 
-  async login(senhaLogin: string, email: string): Promise<boolean> {
+  async login(email: string, senhaLogin: string): Promise<boolean> {
     const empregado = await this.Empregado.findByEmail(email);
 
     if (empregado === null) return false;
