@@ -55,4 +55,10 @@ export class UseEmpregado implements IEmpregadoRepo {
       },
     });
   }
+
+  async findByEmail(email: string): Promise<Empregado | null> {
+    return await prisma.empregado.findUnique({
+      where: { ds_email: email },
+    });
+  }
 }
