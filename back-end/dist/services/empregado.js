@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UseEmpregado = void 0;
+const gestaoSenhas_1 = require("../services/gestaoSenhas");
 const prisma_1 = require("../database/prisma");
 class UseEmpregado {
+    constructor() {
+        this.Senha = new gestaoSenhas_1.GestaoSenha();
+    }
     async create(data) {
         return await prisma_1.prisma.empregado.create({
             data: {
@@ -12,15 +16,18 @@ class UseEmpregado {
                 ds_profissao: data.ds_profissao,
                 vl_salario: data.vl_salario,
                 dt_admissao: data.dt_admissao,
+                ds_password: await this.Senha.criptografarSenha(data.ds_password),
+                role: data.role,
+                ds_cpf: data.ds_cpf,
             },
         });
     }
     async findAll() {
         return await prisma_1.prisma.empregado.findMany();
     }
-    async findById(empregadoId) {
+    async findById(id) {
         return await prisma_1.prisma.empregado.findUnique({
-            where: { id_empregado: empregadoId },
+            where: { id_empregado: id },
         });
     }
     async delete(id) {
@@ -39,8 +46,15 @@ class UseEmpregado {
                 ds_profissao: data.ds_profissao,
                 vl_salario: data.vl_salario,
                 dt_admissao: data.dt_admissao,
-                id_projeto: data.id_projeto,
+                ds_password: data.ds_password,
+                role: data.role,
+                ds_cpf: data.ds_cpf,
             },
+        });
+    }
+    async findByEmail(email) {
+        return await prisma_1.prisma.empregado.findUnique({
+            where: { ds_email: email },
         });
     }
 }

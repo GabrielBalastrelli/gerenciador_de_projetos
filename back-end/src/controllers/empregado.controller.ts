@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UseEmpregado } from '../services/empregado';
+import { validate } from 'deep-email-validator';
 
 export default class ControllerEmpregado {
   private empregado = new UseEmpregado();
@@ -7,6 +8,12 @@ export default class ControllerEmpregado {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       console.log(req.body);
+
+      const emailValido = validate(req.body.ds_email);
+      if (!emailValido) {
+        res.status(400).json({ error: 'E-mail inválido'! });
+      }
+
       const empregado = await this.empregado.create(req.body);
       res.status(201).json(empregado);
     } catch (error) {

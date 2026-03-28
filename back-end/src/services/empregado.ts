@@ -40,7 +40,7 @@ export class UseEmpregado implements IEmpregadoRepo {
     });
   }
 
-  async update(id: string, data: Partial<Empregado>): Promise<Empregado> {
+  async update(id: string, data: Partial<EmpregadoData>): Promise<Empregado> {
     return await prisma.empregado.update({
       where: { id_empregado: id },
       data: {
