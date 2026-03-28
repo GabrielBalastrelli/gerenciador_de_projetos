@@ -9,20 +9,20 @@ export class ControllerAuth {
       const { ds_password, ds_email } = req.body;
 
       if (typeof ds_email !== 'string' || typeof ds_password !== 'string') {
-        res.status(400).json({ error: 'Parâmetros inválidos' });
-        return false;
+        res.status(400).json({ sucess: false, error: 'Parâmetros inválidos' });
+        return;
       }
 
       const login: boolean = await this.authService.login(ds_email, ds_password);
 
       if (!login) {
-        res.status(401).json({ error: 'E-mail ou senha inválidos!' });
-        return false;
+        res.status(401).json({ sucess: false, error: 'E-mail ou senha inválidos!' });
+        return;
       }
 
-      res.status(200).json({ message: 'Login realizado com sucesso!' });
+      res.status(200).json({ sucess: 200, message: 'Login realizado com sucesso!' });
 
-      return true;
+      return;
     } catch (error) {
       next(error);
     }
