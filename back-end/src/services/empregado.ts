@@ -11,10 +11,10 @@ export class UseEmpregado implements IEmpregadoRepo {
       data: {
         ds_nome: data.ds_nome,
         ds_email: data.ds_email,
-        dt_nascimento: data.dt_nascimento,
+        dt_nascimento: new Date(data.dt_nascimento),
         ds_profissao: data.ds_profissao,
         vl_salario: data.vl_salario,
-        dt_admissao: data.dt_admissao,
+        dt_admissao: new Date(data.dt_admissao),
         ds_password: await this.Senha.criptografarSenha(data.ds_password),
         role: data.role,
         ds_cpf: data.ds_cpf,
