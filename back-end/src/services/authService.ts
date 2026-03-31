@@ -11,6 +11,7 @@ export class AuthService implements IAuthService {
   private privateKey: string = process.env.PRIVATE_KEY as string;
 
   validarToken(token: string): PayloadJwt {
+    console.log('token)');
     try {
       return jwt.verify(token, this.privateKey) as PayloadJwt;
     } catch (error) {

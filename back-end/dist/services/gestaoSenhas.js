@@ -12,7 +12,7 @@ class GestaoSenha {
         return hash;
     }
     async compararSenha(senha, senhaLogin) {
-        return await bcrypt_1.default.compare(senha, senhaLogin);
+        return await bcrypt_1.default.compare(senhaLogin, senha);
     }
 }
 exports.GestaoSenha = GestaoSenha;

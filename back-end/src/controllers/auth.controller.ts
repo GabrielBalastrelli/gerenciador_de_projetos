@@ -48,14 +48,12 @@ export class ControllerAuth {
 
   middlewareValidaToken(req: Request, res: Response, next: NextFunction) {
     const auth: string | undefined = req.headers.authorization;
-
     if (auth === undefined) {
       res.status(401).json({ error: 'Token não enviado!' });
       return;
     }
 
     const token: string = auth.split(' ')[1];
-
     try {
       const empregado = this.authService.validarToken(token);
 

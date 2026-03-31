@@ -4,5 +4,5 @@ const express_1 = require("express");
 const auth_controller_1 = require("../controllers/auth.controller");
 const authRouter = (0, express_1.Router)();
 const controler = new auth_controller_1.ControllerAuth();
-authRouter.post('/login', controler.login.bind(controler));
+authRouter.post('/', controler.login.bind(controler));
 exports.default = authRouter;
