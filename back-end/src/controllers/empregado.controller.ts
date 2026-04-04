@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { UseEmpregado } from '../services/empregado';
 import { validate } from 'deep-email-validator';
 import { validarSenha } from '../utils/validadorSenha';
+import { validarCpf } from '../utils/validadorCPF';
 
 export default class ControllerEmpregado {
   private empregado = new UseEmpregado();
@@ -10,11 +11,17 @@ export default class ControllerEmpregado {
     try {
       const email: string = req.body.ds_email;
       const senha: string = req.body.ds_password;
+      const cpf: string = req.body.ds_cpf;
 
       const emailValido = await validate({
         email: email,
         validateSMTP: false,
       });
+
+      if (!validarCpf(cpf)) {
+        res.status(400).json({ error: 'cpf_invalid', message: 'CPF inválido!' });
+        return;
+      }
 
       if (!emailValido.valid) {
         res.status(400).json({ error: 'invalid_email'!, message: 'E-mail inválido!' });
