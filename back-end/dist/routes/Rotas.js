@@ -1,3 +1,2 @@
-"use strict";
-module.exports = class Rotas {
-};
+'use strict';
+module.exports = class Rotas {};
