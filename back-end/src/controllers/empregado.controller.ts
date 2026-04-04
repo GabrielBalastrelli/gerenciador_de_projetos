@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { UseEmpregado } from '../services/empregado';
 import { validate } from 'deep-email-validator';
+import { validarSenha } from '../utils/validadorSenha';
 
 export default class ControllerEmpregado {
   private empregado = new UseEmpregado();
@@ -8,8 +9,7 @@ export default class ControllerEmpregado {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const email: string = req.body.ds_email;
-
-      console.log(email);
+      const senha: string = req.body.ds_password;
 
       const emailValido = await validate({
         email: email,
@@ -17,7 +17,16 @@ export default class ControllerEmpregado {
       });
 
       if (!emailValido.valid) {
-        res.status(400).json({ error: 'E-mail inválido'! });
+        res.status(400).json({ error: 'invalid_email'!, message: 'E-mail inválido!' });
+        return;
+      }
+
+      if (!validarSenha(senha)) {
+        res.status(400).json({
+          error: 'weak_password',
+          message: 'A senha não atende aos requisitos de segurança.',
+        });
+        return;
       }
 
       const empregado = await this.empregado.create(req.body);
