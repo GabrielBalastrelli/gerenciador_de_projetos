@@ -3,6 +3,7 @@ import { UseEmpregado } from '../services/empregado';
 import { validate } from 'deep-email-validator';
 import { validarSenha } from '../utils/validadorSenha';
 import { validarCpf } from '../utils/validadorCPF';
+import { schemaCriarEmpregado } from '../schema/shemaEmpregado';
 
 export default class ControllerEmpregado {
   private empregado = new UseEmpregado();
@@ -12,6 +13,12 @@ export default class ControllerEmpregado {
       const email: string = req.body.ds_email;
       const senha: string = req.body.ds_password;
       const cpf: string = req.body.ds_cpf;
+
+      const dadosValidos = schemaCriarEmpregado.safeParse(req.body);
+
+      if (!dadosValidos.success) {
+        return res.status(400).json({ errors: dadosValidos.error.issues });
+      }
 
       const emailValido = await validate({
         email: email,
