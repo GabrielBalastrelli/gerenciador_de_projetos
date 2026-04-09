@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UseProjeto } from '../services/projeto';
+import { schemaPaginacao } from '../schema/schemaPaginacao';
 
 export class ControllerProjeto {
   private projeto = new UseProjeto();
@@ -7,7 +8,7 @@ export class ControllerProjeto {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const projeto = await this.projeto.create(req.body);
-      res.status(201).json(projeto);
+      return res.status(201).json(projeto);
     } catch (error) {
       next(error);
     }
@@ -35,8 +36,20 @@ export class ControllerProjeto {
 
   async findAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const demandas = await this.projeto.findAll();
-      res.status(200).json(demandas);
+      console.log(Number(req.query.page));
+      const { page, limit } = schemaPaginacao.parse({
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+      });
+
+      const demandas = await this.projeto.findAll(limit, page);
+
+      const paginacao = {
+        page,
+        limit,
+      };
+
+      return res.status(200).json({ data: demandas, paginacao });
     } catch (error) {
       next(error);
     }
