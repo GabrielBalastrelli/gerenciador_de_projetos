@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const empregado_1 = require("../services/empregado");
 const deep_email_validator_1 = require("deep-email-validator");
+const validadorSenha_1 = require("../utils/validadorSenha");
+const validadorCPF_1 = require("../utils/validadorCPF");
+const shemaEmpregado_1 = require("../schema/shemaEmpregado");
 class ControllerEmpregado {
     constructor() {
         this.empregado = new empregado_1.UseEmpregado();
@@ -9,13 +12,30 @@ class ControllerEmpregado {
     async create(req, res, next) {
         try {
             const email = req.body.ds_email;
-            console.log(email);
+            const senha = req.body.ds_password;
+            const cpf = req.body.ds_cpf;
+            const dadosValidos = shemaEmpregado_1.schemaCriarEmpregado.safeParse(req.body);
+            if (!dadosValidos.success) {
+                return res.status(400).json({ errors: dadosValidos.error.issues });
+            }
             const emailValido = await (0, deep_email_validator_1.validate)({
                 email: email,
                 validateSMTP: false,
             });
+            if (!(0, validadorCPF_1.validarCpf)(cpf)) {
+                res.status(400).json({ error: 'cpf_invalid', message: 'CPF inválido!' });
+                return;
+            }
             if (!emailValido.valid) {
-                res.status(400).json({ error: 'E-mail inválido' });
+                res.status(400).json({ error: 'invalid_email', message: 'E-mail inválido!' });
+                return;
+            }
+            if (!(0, validadorSenha_1.validarSenha)(senha)) {
+                res.status(400).json({
+                    error: 'weak_password',
+                    message: 'A senha não atende aos requisitos de segurança.',
+                });
+                return;
             }
             const empregado = await this.empregado.create(req.body);
             res.status(201).json(empregado);

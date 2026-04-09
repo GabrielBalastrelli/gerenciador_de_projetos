@@ -2,8 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const projeto_controller_1 = require("../controllers/projeto.controller");
+const auth_controller_1 = require("../controllers/auth.controller");
 const projetoRouter = (0, express_1.Router)();
 const controller = new projeto_controller_1.ControllerProjeto();
+const authController = new auth_controller_1.ControllerAuth();
+projetoRouter.use(authController.middlewareValidaToken.bind(authController));
 projetoRouter.post('/', controller.create.bind(controller));
 projetoRouter.delete('/:id', controller.create.bind(controller));
 projetoRouter.put('/:id', controller.update.bind(controller));

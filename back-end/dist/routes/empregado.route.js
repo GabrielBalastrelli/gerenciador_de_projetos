@@ -10,7 +10,7 @@ const empregadoRouter = (0, express_1.Router)();
 const controller = new empregado_controller_1.default();
 const authController = new auth_controller_1.ControllerAuth();
 empregadoRouter.post('/', controller.create.bind(controller));
-empregadoRouter.use(authController.middlewareValidaToken); // ≳ Rotas privadas
+empregadoRouter.use(authController.middlewareValidaToken.bind(authController)); // ≳ Rotas privadas
 empregadoRouter.get('/', controller.findAll.bind(controller));
 empregadoRouter.get('/email', controller.findByEmail.bind(controller));
 empregadoRouter.get('/:id', controller.findId.bind(controller));

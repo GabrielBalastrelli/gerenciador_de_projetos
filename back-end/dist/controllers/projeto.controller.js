@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ControllerProjeto = void 0;
 const projeto_1 = require("../services/projeto");
+const schemaPaginacao_1 = require("../schema/schemaPaginacao");
 class ControllerProjeto {
     constructor() {
         this.projeto = new projeto_1.UseProjeto();
@@ -9,7 +10,7 @@ class ControllerProjeto {
     async create(req, res, next) {
         try {
             const projeto = await this.projeto.create(req.body);
-            res.status(201).json(projeto);
+            return res.status(201).json(projeto);
         }
         catch (error) {
             next(error);
@@ -37,8 +38,17 @@ class ControllerProjeto {
     }
     async findAll(req, res, next) {
         try {
-            const demandas = await this.projeto.findAll();
-            res.status(200).json(demandas);
+            console.log(Number(req.query.page));
+            const { page, limit } = schemaPaginacao_1.schemaPaginacao.parse({
+                page: Number(req.query.page),
+                limit: Number(req.query.limit),
+            });
+            const demandas = await this.projeto.findAll(limit, page);
+            const paginacao = {
+                page,
+                limit,
+            };
+            return res.status(200).json({ data: demandas, paginacao });
         }
         catch (error) {
             next(error);
