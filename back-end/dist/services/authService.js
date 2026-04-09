@@ -15,6 +15,7 @@ class AuthService {
         this.privateKey = process.env.PRIVATE_KEY;
     }
     validarToken(token) {
+        console.log('token)');
         try {
             return jsonwebtoken_1.default.verify(token, this.privateKey);
         }
