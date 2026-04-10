@@ -22,8 +22,11 @@ class UseEmpregado {
             },
         });
     }
-    async findAll() {
-        return await prisma_1.prisma.empregado.findMany();
+    async findAll(page, limit) {
+        return await prisma_1.prisma.empregado.findMany({
+            skip: (page - 1) * limit,
+            take: limit,
+        });
     }
     async findById(id) {
         return await prisma_1.prisma.empregado.findUnique({

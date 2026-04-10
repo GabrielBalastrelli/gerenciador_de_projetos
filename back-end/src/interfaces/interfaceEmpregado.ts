@@ -13,7 +13,7 @@ export type EmpregadoData = {
 };
 
 export interface IEmpregadoRepo {
-  findAll(): Promise<Empregado[]>;
+  findAll(page: number, limit: number): Promise<Empregado[]>;
   findById(id: string): Promise<Empregado | null>;
   findByEmail(email: string): Promise<Empregado | null>;
   create(data: EmpregadoData | Omit<Empregado, 'id_empregado'>): Promise<Empregado>;

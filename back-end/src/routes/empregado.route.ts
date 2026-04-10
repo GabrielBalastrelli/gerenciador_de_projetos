@@ -8,7 +8,7 @@ const authController = new ControllerAuth();
 
 empregadoRouter.post('/', controller.create.bind(controller));
 
-empregadoRouter.use(authController.middlewareValidaToken.bind(authController)); // ≳ Rotas privadas
+empregadoRouter.use(authController.middlewareValidaToken.bind(authController));
 
 empregadoRouter.get('/', controller.findAll.bind(controller));
 empregadoRouter.get('/email', controller.findByEmail.bind(controller));
