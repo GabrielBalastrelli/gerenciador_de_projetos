@@ -22,8 +22,11 @@ export class UseEmpregado implements IEmpregadoRepo {
     });
   }
 
-  async findAll(): Promise<Empregado[]> {
-    return await prisma.empregado.findMany();
+  async findAll(page: number, limit: number): Promise<Empregado[]> {
+    return await prisma.empregado.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
 
   async findById(id: string): Promise<Empregado | null> {

@@ -5,6 +5,7 @@ const deep_email_validator_1 = require("deep-email-validator");
 const validadorSenha_1 = require("../utils/validadorSenha");
 const validadorCPF_1 = require("../utils/validadorCPF");
 const shemaEmpregado_1 = require("../schema/shemaEmpregado");
+const schemaPaginacao_1 = require("../schema/schemaPaginacao");
 class ControllerEmpregado {
     constructor() {
         this.empregado = new empregado_1.UseEmpregado();
@@ -67,8 +68,16 @@ class ControllerEmpregado {
     }
     async findAll(req, res, next) {
         try {
-            const empregados = await this.empregado.findAll();
-            res.status(200).json(empregados);
+            const { page, limit } = schemaPaginacao_1.schemaPaginacao.parse({
+                page: Number(req.query.page),
+                limit: Number(req.query.limit),
+            });
+            const paginacao = {
+                page,
+                limit,
+            };
+            const empregados = await this.empregado.findAll(page, limit);
+            res.status(200).json({ data: empregados, paginacao });
         }
         catch (error) {
             next(error);

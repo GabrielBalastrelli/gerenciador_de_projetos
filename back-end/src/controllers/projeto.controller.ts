@@ -36,7 +36,6 @@ export class ControllerProjeto {
 
   async findAll(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(Number(req.query.page));
       const { page, limit } = schemaPaginacao.parse({
         page: Number(req.query.page),
         limit: Number(req.query.limit),

@@ -4,6 +4,7 @@ import { validate } from 'deep-email-validator';
 import { validarSenha } from '../utils/validadorSenha';
 import { validarCpf } from '../utils/validadorCPF';
 import { schemaCriarEmpregado } from '../schema/shemaEmpregado';
+import { schemaPaginacao } from '../schema/schemaPaginacao';
 
 export default class ControllerEmpregado {
   private empregado = new UseEmpregado();
@@ -72,9 +73,23 @@ export default class ControllerEmpregado {
   }
 
   async findAll(req: Request, res: Response, next: NextFunction) {
+    console.log('asdasdad');
+
     try {
-      const empregados = await this.empregado.findAll();
-      res.status(200).json(empregados);
+      const { page, limit } = schemaPaginacao.parse({
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+      });
+
+      const paginacao = {
+        page,
+        limit,
+      };
+
+      const empregados = await this.empregado.findAll(page, limit);
+
+      console.log(empregados);
+      res.status(200).json({ data: empregados, paginacao });
     } catch (error) {
       next(error);
     }
