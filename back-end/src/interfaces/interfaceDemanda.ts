@@ -13,6 +13,6 @@ export interface IDemandaRepo {
   create(data: DemandaData | Omit<Demanda, 'id_demanda'>): Promise<Demanda>;
   update(idDemanda: string, data: Partial<DemandaData>): Promise<Demanda>;
   delete(idDemanda: string): Promise<void>;
-  findAll(): Promise<Demanda[]>;
+  findAll(page: number, limit: number): Promise<Demanda[]>;
   findId(idDemanda: string): Promise<Demanda | null>;
 }
