@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UseDemanda } from '../services/demanda';
+import { schemaPaginacao } from '../schema/schemaPaginacao';
 
 export default class ControllerDemanda {
   private demandaService = new UseDemanda();
@@ -35,7 +36,12 @@ export default class ControllerDemanda {
 
   async findAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const demandas = await this.demandaService.findAll();
+      const { page, limit } = schemaPaginacao.parse({
+        page: Number(req.query.page),
+        limit: Number(req.query.limit),
+      });
+
+      const demandas = await this.demandaService.findAll(page, limit);
       res.status(200).json(demandas);
     } catch (error) {
       next(error);
