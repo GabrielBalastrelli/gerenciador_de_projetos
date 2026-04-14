@@ -36,8 +36,11 @@ export class UseDemanda implements IDemandaRepo {
     });
   }
 
-  async findAll(): Promise<Demanda[]> {
-    return await prisma.demanda.findMany();
+  async findAll(page: number, limit: number): Promise<Demanda[]> {
+    return await prisma.demanda.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
 
   async findId(idDemanda: string): Promise<Demanda | null> {
