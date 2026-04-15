@@ -6,9 +6,9 @@ import 'dotenv/config';
 import { Empregado } from '@prisma/client';
 
 export class AuthService implements IAuthService {
-  private Empregado = new UseEmpregado();
-  private GestaoSenhas = new GestaoSenha();
-  private privateKey: string = process.env.PRIVATE_KEY as string;
+  private readonly Empregado = new UseEmpregado();
+  private readonly GestaoSenhas = new GestaoSenha();
+  private readonly privateKey: string = process.env.PRIVATE_KEY as string;
 
   validarToken(token: string): PayloadJwt {
     console.log('token)');
