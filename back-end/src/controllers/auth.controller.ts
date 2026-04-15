@@ -2,6 +2,7 @@ import { Empregado } from '@prisma/client';
 import { AuthService } from '../services/authService';
 import { Request, Response, NextFunction } from 'express';
 import { PayloadJwt } from '../interfaces/interfaceAuthService';
+import { IInterfaceResponseEmpregado } from '../interfaces/interfaceEmpregadoRes';
 
 declare global {
   namespace Express {
@@ -36,9 +37,21 @@ export class ControllerAuth {
         empregado.role,
       );
 
-      res
-        .status(200)
-        .json({ status: 200, success: true, token, message: 'Login Realizado com Sucesso!' });
+      const infoEmpregado: IInterfaceResponseEmpregado = {
+        nome: empregado.ds_nome,
+        role: empregado.role,
+        profissao: empregado.ds_profissao,
+        email: empregado.ds_email,
+        dataContratacao: empregado.dt_admissao,
+      };
+
+      res.status(200).json({
+        status: 200,
+        success: true,
+        token,
+        infoEmpregado,
+        message: 'Login Realizado com Sucesso!',
+      });
 
       return;
     } catch (error) {
