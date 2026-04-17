@@ -21,13 +21,18 @@ export function Login() {
       const data = await authLogin(email, password);
 
       sessionStorage.setItem("userToken", data.token);
-
-      navigate("/home");
+      console.log(sessionStorage.getItem("userToken"));
+      navigate("/home", {
+        state: {
+          data: data.infoEmpregado,
+        },
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         setError(error.message);
+      } else {
+        setError("Erro ao fazer desconhecido.");
       }
-      setError("Erro ao fazer desconhecido.");
       return;
     }
   };
