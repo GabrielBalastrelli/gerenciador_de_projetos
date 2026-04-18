@@ -4,7 +4,7 @@ export interface IGetProjetoParams {
   limit: number;
 }
 
-export interface IGetProjetoParams {
+export interface IGetProjetoResponse {
   id_projeto: string;
   ds_nome: string;
   ds_descricao: string;

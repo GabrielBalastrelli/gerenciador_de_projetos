@@ -18,7 +18,7 @@ export class Projeto {
         },
       );
 
-      return res.data;
+      return res.data.data;
     } catch (error) {
       if (isAxiosError(error)) {
         throw new AxiosError(error.response.data, error.code);

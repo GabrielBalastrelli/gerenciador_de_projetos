@@ -21,10 +21,10 @@ export function Login() {
       const data = await authLogin(email, password);
 
       sessionStorage.setItem("userToken", data.token);
-      console.log(sessionStorage.getItem("userToken"));
+
       navigate("/home", {
         state: {
-          data: data.infoEmpregado,
+          data: email,
         },
       });
     } catch (error) {

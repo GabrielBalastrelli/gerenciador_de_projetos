@@ -1,10 +1,4 @@
-export interface IDataEmpregado {
-  nome: string;
-  role: string;
-  profissao: string;
-  email: string;
-  dataContratacao: string;
-}
+import type { IDataEmpregado } from "./interface-empregado";
 
 export interface IAuthValidation {
   status: number;
