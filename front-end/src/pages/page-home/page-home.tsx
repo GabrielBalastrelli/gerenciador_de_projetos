@@ -23,7 +23,7 @@ export function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setEmail(location?.state?.data?.email);
+    setEmail(location?.state?.data);
   }, [location]);
 
   useEffect(() => {
@@ -65,8 +65,8 @@ export function Home() {
   }, []);
 
   return (
-    <div className="container py-4">
-      <h1>Dashboard</h1>
+    <div className="container py-4 style={{ maxWidth: '1100px' }">
+      <h1 className="card-title fw-bold fs-4">Dashboard</h1>
 
       {empregado && <CardEmpregado data={empregado} />}
 

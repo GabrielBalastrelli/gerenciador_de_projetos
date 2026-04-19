@@ -7,10 +7,30 @@ interface DataEmpregadoProps {
 export const CardEmpregado = ({ data }: DataEmpregadoProps) => {
   return (
     <div className="container mt-4">
-      <div className="row">
-        <h3 className=""> Nome: {data?.nome}</h3>
-        <p>Data de contração: {data?.dataContratacao}</p>
-        <p>Cargo: {data?.profissao}</p>
+      <div className="card shadow-sm border-0 rounded-4">
+        <div className="card-body">
+          <h5 className="card-title fw-bold mb-3">👤 {data?.nome}</h5>
+
+          <div className="mb-2">
+            <span className="fw-semibold text-secondary">
+              Data de contratação:
+            </span>
+            <p className="mb-0">{data?.dataContratacao}</p>
+          </div>
+
+          <div className="mb-2">
+            <span className="fw-semibold text-secondary">Cargo:</span>
+            <p className="mb-0">{data?.profissao}</p>
+          </div>
+
+          <div className="d-flex justify-content-between align-items-center mt-2">
+            <span className="badge bg-info p-3">{data?.role}</span>
+            <button type="button" className="btn btn-primary">
+              {" "}
+              Editar Perfil
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

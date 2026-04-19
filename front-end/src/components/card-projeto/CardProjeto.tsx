@@ -5,25 +5,30 @@ interface CardProjetoProps {
 }
 
 export const CardProjeto = ({ data }: CardProjetoProps) => {
-  console.log("data no CardProjeto:", data);
-  console.log("é array?", Array.isArray(data));
   return (
-    <div className="row mt-4">
+    <div className="row mt-4 g-4">
+      <h3 className="fw-bold fs-3 mb-4">Seus Projetos Recentes</h3>
       {data?.map((item, index) => (
-        <div key={index} className="col-4">
-          <p>
-            <strong>Projeto:</strong> {item.ds_nome}
-          </p>
-          <p>
-            <strong>Descrição:</strong> {item.ds_descricao}
-          </p>
-          <p>
-            Orçamento:{" "}
-            {item.orcamento.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </p>
+        <div key={index} className="col-12 col-md-6 col-lg-4 d-flex ">
+          <div className="card h-100 shadow border-0 rounded-4">
+            <div className="card-body d-flex flex-column">
+              <h5 className="card-title fw-bold mb-3">📁 {item.ds_nome}</h5>
+
+              <p className="card-text text-muted flex-grow-1">
+                {item.ds_descricao}
+              </p>
+
+              <div className="mt-3">
+                <span className="fw-semibold text-secondary">Orçamento:</span>
+                <p className="mb-0">
+                  {item.orcamento.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       ))}
     </div>
