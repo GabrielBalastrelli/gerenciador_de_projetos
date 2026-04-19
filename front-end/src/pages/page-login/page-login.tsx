@@ -22,12 +22,17 @@ export function Login() {
 
       sessionStorage.setItem("userToken", data.token);
 
-      navigate("/home");
+      navigate("/home", {
+        state: {
+          data: email,
+        },
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         setError(error.message);
+      } else {
+        setError("Erro ao fazer desconhecido.");
       }
-      setError("Erro ao fazer desconhecido.");
       return;
     }
   };

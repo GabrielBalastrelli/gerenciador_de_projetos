@@ -1,10 +1,18 @@
 import { Router } from 'express';
 import { ControllerProjeto } from '../controllers/projeto.controller';
 import { ControllerAuth } from '../controllers/auth.controller';
+import cors from 'cors';
 
 const projetoRouter = Router();
 const controller = new ControllerProjeto();
 const authController = new ControllerAuth();
+
+projetoRouter.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }),
+);
 
 projetoRouter.use(authController.middlewareValidaToken.bind(authController));
 projetoRouter.post('/', controller.create.bind(controller));
