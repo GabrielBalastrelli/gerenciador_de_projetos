@@ -19,7 +19,7 @@ empregadoRouter.post('/', controller.create.bind(controller));
 empregadoRouter.use(authController.middlewareValidaToken.bind(authController));
 
 empregadoRouter.get('/', controller.findAll.bind(controller));
-empregadoRouter.get('/email', controller.findByEmail.bind(controller));
+empregadoRouter.get('/email/:ds_email', controller.findByEmail.bind(controller));
 empregadoRouter.get('/:id', controller.findId.bind(controller));
 
 empregadoRouter.put('/:id', controller.update.bind(controller));

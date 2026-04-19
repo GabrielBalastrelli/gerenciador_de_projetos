@@ -115,7 +115,7 @@ export default class ControllerEmpregado {
       const empregado = await this.empregado.findByEmail(ds_email);
 
       if (!empregado) {
-        res.status(401).json({ message: 'Não foi encontrado empregado com esse e-mail.' });
+        res.status(404).json({ message: 'Não foi encontrado empregado com esse e-mail.' });
       }
 
       res.status(200).json(empregado);
