@@ -12,7 +12,6 @@ export const NavBar = () => {
   const menuRef = useRef<HTMLLIElement | null>(null);
   const userRef = useRef<HTMLDivElement | null>(null);
 
-  // fechar ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Node;
@@ -33,7 +32,6 @@ export const NavBar = () => {
     };
   }, []);
 
-  // fechar com ESC
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -57,7 +55,6 @@ export const NavBar = () => {
       }}
     >
       <div className="container-fluid px-4">
-        {/* Toggle mobile (Bootstrap OK aqui) */}
         <button
           className="navbar-toggler border-0"
           type="button"
@@ -85,7 +82,6 @@ export const NavBar = () => {
               </NavLink>
             </li>
 
-            {/* DROPDOWN OPÇÕES */}
             <li className="nav-item position-relative" ref={menuRef}>
               <button
                 type="button"
@@ -134,7 +130,6 @@ export const NavBar = () => {
           </ul>
         </div>
 
-        {/* USER DROPDOWN */}
         <div
           className="d-flex align-items-center gap-3 position-relative"
           ref={userRef}
@@ -155,7 +150,7 @@ export const NavBar = () => {
             <ul className="dropdown-menu dropdown-menu-end show shadow position-absolute top-100 end-0 mt-2">
               <li>
                 <NavLink
-                  to="/perfil"
+                  to="/perfilEmpregado"
                   className="dropdown-item"
                   onClick={() => setUserOpen(false)}
                 >

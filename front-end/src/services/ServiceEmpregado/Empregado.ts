@@ -61,7 +61,6 @@ export class Empregado {
 
   async postEmpregado(data: IDataEmpregadoForm): Promise<IDataEmpregado> {
     const dataPost: IDataPostApi = this.mapEmpregadoPostApi(data);
-    console.log(`Dados chegando: ${data.salario}`);
     try {
       const res = await axios.post(this.URLPOST, dataPost);
 
