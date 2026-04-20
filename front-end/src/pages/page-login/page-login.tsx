@@ -3,11 +3,14 @@ import { authLogin } from "../../services/authService";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import { useEmpregadoStore } from "../../store/useEmpregadoStore";
+
 export function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const setEmailStore = useEmpregadoStore((set) => set.setEmail);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +24,8 @@ export function Login() {
       const data = await authLogin(email, password);
 
       sessionStorage.setItem("userToken", data.token);
+
+      setEmailStore(email);
 
       navigate("/home", {
         state: {

@@ -1,4 +1,5 @@
 import type { IDataEmpregado } from "../../interfaces/interface-empregado";
+import { NavLink } from "react-router-dom";
 
 interface DataEmpregadoProps {
   data: IDataEmpregado;
@@ -22,13 +23,14 @@ export const CardEmpregado = ({ data }: DataEmpregadoProps) => {
             <span className="fw-semibold text-secondary">Cargo:</span>
             <p className="mb-0">{data?.profissao}</p>
           </div>
-
+          <div></div>
           <div className="d-flex justify-content-between align-items-center mt-2">
             <span className="badge bg-info p-3">{data?.role}</span>
-            <button type="button" className="btn btn-primary">
-              {" "}
-              Editar Perfil
-            </button>
+            <NavLink to="/perfil">
+              <button type="button" className="btn btn-primary">
+                Editar Perfil
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>

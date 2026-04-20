@@ -1,4 +1,3 @@
-import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 
 import { Projeto } from "../../services/ConsultasProjeto/Projeto";
@@ -7,6 +6,9 @@ import { Empregado } from "../../services/ConsultasEmpregado/Empregado";
 import { CardProjeto } from "../../components/card-projeto/CardProjeto";
 import { CardEmpregado } from "../../components/card-empregado/CardEmpregado";
 import { CardError } from "../../components/card-erro/CardError";
+import { NavBar } from "../../components/nav-bar/NavBar";
+
+import { useEmpregadoStore } from "../../store/useEmpregadoStore";
 
 import type { IDataEmpregado } from "../../interfaces/interface-empregado";
 import type { IGetProjetoResponse } from "../../interfaces/interface-get-projeto";
@@ -15,26 +17,22 @@ export function Home() {
   const consultasProjetos: Projeto = new Projeto();
   const consultasEmpregado: Empregado = new Empregado();
 
-  const location = useLocation();
+  const setNomeStore = useEmpregadoStore((set) => set.setNome);
+  const email = useEmpregadoStore((set) => set.email);
+  const setRole = useEmpregadoStore((set) => set.setRole);
 
-  const [email, setEmail] = useState(null);
   const [empregado, setEmpregado] = useState<IDataEmpregado | null>(null);
   const [projetos, setProjeto] = useState<IGetProjetoResponse[] | null>(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setEmail(location?.state?.data);
-  }, [location]);
-
-  useEffect(() => {
     if (!email) return;
     const fetchEmpregado = async () => {
       try {
-        const res = await consultasEmpregado.findEmpregadoEmail(
-          email,
-          sessionStorage.getItem("userToken"),
-        );
+        const res = await consultasEmpregado.findEmpregadoEmail();
 
+        setNomeStore(res.nome);
+        setRole(res.role);
         setEmpregado(res);
       } catch (error) {
         setError(error);
@@ -65,16 +63,21 @@ export function Home() {
   }, []);
 
   return (
-    <div className="container py-4 style={{ maxWidth: '1100px' }">
-      <h1 className="card-title fw-bold fs-4">Dashboard</h1>
+    <>
+      <NavBar />
 
-      {empregado && <CardEmpregado data={empregado} />}
+      <div style={{ paddingTop: "80px" }}>
+        <div className="container py-4" style={{ maxWidth: "1100px" }}>
+          <h1 className="card-title fw-bold fs-4">Dashboard</h1>
 
-      {projetos && <CardProjeto data={projetos} />}
+          {empregado && <CardEmpregado data={empregado} />}
+          {projetos && <CardProjeto data={projetos} />}
 
-      {error && (
-        <CardError message={error?.message ?? "Erro não identificado!"} />
-      )}
-    </div>
+          {error && (
+            <CardError message={error?.message ?? "Erro não identificado!"} />
+          )}
+        </div>
+      </div>
+    </>
   );
 }

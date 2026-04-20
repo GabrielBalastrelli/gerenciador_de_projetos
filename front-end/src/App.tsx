@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/page-login/page-login";
 import { Cadastro } from "./pages/page-cadastro/page-cadastro";
 import { Home } from "./pages/page-home/page-home";
+import { ConfigEmpregado } from "./pages/confi-empregado/configEmpregado";
+import { Perfil } from "./pages/perfil/perfil";
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/configEmpregado" element={<ConfigEmpregado />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </>
   );
