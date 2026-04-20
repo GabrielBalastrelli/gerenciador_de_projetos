@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Projeto } from "../../services/ConsultasProjeto/Projeto";
-import { Empregado } from "../../services/ConsultasEmpregado/Empregado";
+import { Empregado } from "../../services/ServiceEmpregado/Empregado";
 
 import { CardProjeto } from "../../components/card-projeto/CardProjeto";
 import { CardEmpregado } from "../../components/card-empregado/CardEmpregado";

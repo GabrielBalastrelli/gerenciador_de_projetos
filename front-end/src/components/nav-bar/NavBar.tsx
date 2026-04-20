@@ -1,12 +1,54 @@
 import { NavLink } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useEmpregadoStore } from "../../store/useEmpregadoStore";
-import { toUpperCase } from "zod";
 
 export const NavBar = () => {
-  const nome: string = useEmpregadoStore((state) => state.nome);
-  const role: string = useEmpregadoStore((state) => state.role);
-  console.log(role.toUpperCase() === "gerente".toLocaleUpperCase());
-  console.log(role);
+  const nome = useEmpregadoStore((state) => state.nome);
+  const role = useEmpregadoStore((state) => state.role);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
+
+  const menuRef = useRef<HTMLLIElement | null>(null);
+  const userRef = useRef<HTMLDivElement | null>(null);
+
+  // fechar ao clicar fora
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
+
+      if (menuRef.current && !menuRef.current.contains(target)) {
+        setMenuOpen(false);
+      }
+
+      if (userRef.current && !userRef.current.contains(target)) {
+        setUserOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // fechar com ESC
+  useEffect(() => {
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        setUserOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, []);
+
   return (
     <nav
       className="navbar navbar-expand-lg fixed-top shadow-sm"
@@ -15,7 +57,7 @@ export const NavBar = () => {
       }}
     >
       <div className="container-fluid px-4">
-        {/* Toggle mobile */}
+        {/* Toggle mobile (Bootstrap OK aqui) */}
         <button
           className="navbar-toggler border-0"
           type="button"
@@ -25,7 +67,7 @@ export const NavBar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Menu */}
+        {/* MENU PRINCIPAL */}
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
             <li className="nav-item">
@@ -43,39 +85,60 @@ export const NavBar = () => {
               </NavLink>
             </li>
 
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle text-white fw-semibold"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
+            {/* DROPDOWN OPÇÕES */}
+            <li className="nav-item position-relative" ref={menuRef}>
+              <button
+                type="button"
+                className="nav-link text-white fw-semibold bg-transparent border-0"
+                onClick={() => setMenuOpen((v) => !v)}
               >
                 Opções
-              </a>
+              </button>
 
-              <ul className="dropdown-menu shadow border-0">
-                <li>
-                  <NavLink className="dropdown-item" to="/criarProjeto">
-                    Criar Projeto
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="/criarDemanda">
-                    Criar Demanda
-                  </NavLink>
-                </li>
-                <li>
-                  {role.toUpperCase() === "gerente".toLocaleUpperCase() && (
-                    <NavLink className="dropdown-item" to="/CriarEmpregado">
-                      Cadastrar Empregado
+              {menuOpen && (
+                <ul className="dropdown-menu show shadow border-0 position-absolute">
+                  <li>
+                    <NavLink
+                      className="dropdown-item"
+                      to="/criarProjeto"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Criar Projeto
                     </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      className="dropdown-item"
+                      to="/criarDemanda"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Criar Demanda
+                    </NavLink>
+                  </li>
+
+                  {role?.toUpperCase() === "GERENTE" && (
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/cadastroEmpregado"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Cadastrar Empregado
+                      </NavLink>
+                    </li>
                   )}
-                </li>
-              </ul>
+                </ul>
+              )}
             </li>
           </ul>
         </div>
-        <div className="dropdown d-flex align-items-center gap-3">
+
+        {/* USER DROPDOWN */}
+        <div
+          className="d-flex align-items-center gap-3 position-relative"
+          ref={userRef}
+        >
           <p className="mb-0 text-white fw-semibold">{nome}</p>
 
           <img
@@ -83,29 +146,42 @@ export const NavBar = () => {
             alt="user"
             width="45"
             height="45"
-            className="rounded-circle border border-2 border-white dropdown-toggle"
+            className="rounded-circle border border-2 border-white"
             style={{ cursor: "pointer" }}
-            data-bs-toggle="dropdown"
+            onClick={() => setUserOpen((v) => !v)}
           />
 
-          <ul className="dropdown-menu dropdown-menu-end">
-            <li>
-              <NavLink to="/perfil">
-                <button className="dropdown-item">Perfil</button>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/configEmpregado">
-                <button className="dropdown-item">Configurações</button>
-              </NavLink>
-            </li>
-            <li>
-              <hr className="dropdown-divider" />
-            </li>
-            <li>
-              <button className="dropdown-item text-danger">Sair</button>
-            </li>
-          </ul>
+          {userOpen && (
+            <ul className="dropdown-menu dropdown-menu-end show shadow position-absolute top-100 end-0 mt-2">
+              <li>
+                <NavLink
+                  to="/perfil"
+                  className="dropdown-item"
+                  onClick={() => setUserOpen(false)}
+                >
+                  Perfil
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/configEmpregado"
+                  className="dropdown-item"
+                  onClick={() => setUserOpen(false)}
+                >
+                  Configurações
+                </NavLink>
+              </li>
+
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+
+              <li>
+                <button className="dropdown-item text-danger">Sair</button>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>

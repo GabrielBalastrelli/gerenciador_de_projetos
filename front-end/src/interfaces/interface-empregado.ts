@@ -17,3 +17,27 @@ export interface IEmpregadoAPI {
   vl_salario: number;
   dt_admissao: string;
 }
+
+export interface IDataPostApi {
+  ds_nome: string;
+  dt_nascimento: Date;
+  ds_profissao: string;
+  ds_email: string;
+  vl_salario: number;
+  dt_admissao: Date;
+  ds_password: string;
+  role: string;
+  ds_cpf: string;
+}
+
+export interface IDataEmpregadoForm {
+  nome: string;
+  email: string;
+  cpf: string;
+  profissao: string;
+  salario: number;
+  role: string;
+  password: string;
+  dataNascimento: Date;
+  dataAdmissao: Date;
+}
