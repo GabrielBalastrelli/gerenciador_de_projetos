@@ -1,4 +1,4 @@
-import axios, { AxiosError, isAxiosError } from "axios";
+import axios from "axios";
 import type { IAuthValidation } from "../interfaces/interface-auth-validation";
 
 export async function authLogin(
@@ -15,10 +15,10 @@ export async function authLogin(
 
     return req.data;
   } catch (error) {
-    if (isAxiosError(error)) {
-      throw new AxiosError(error.response.data, error.code);
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data || error.message);
     }
 
-    throw new Error("Erro interno 500");
+    throw new Error("Erro desconhecido");
   }
 }

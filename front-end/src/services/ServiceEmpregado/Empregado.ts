@@ -1,0 +1,77 @@
+import axios, { AxiosError } from "axios";
+
+import { useEmpregadoStore } from "../../store/useEmpregadoStore";
+
+import type {
+  IDataEmpregado,
+  IDataEmpregadoForm,
+  IDataPostApi,
+  IEmpregadoAPI,
+} from "../../interfaces/interface-empregado";
+
+export class Empregado {
+  private readonly URL = `http://localhost:3000/empregado/email/`;
+  private readonly URLPOST = `http://localhost:3000/empregado`;
+  private readonly TOKEN = sessionStorage.getItem("userToken");
+
+  private readonly email: string = useEmpregadoStore((set) => set.email);
+
+  async findEmpregadoEmail(): Promise<IDataEmpregado> {
+    try {
+      const res = await axios.get(`${this.URL}${this.email}`, {
+        headers: {
+          Authorization: `Bearer ${this.TOKEN}`,
+        },
+      });
+      return this.mapEmpregado(res?.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new AxiosError(error.response?.data || error.message);
+      }
+
+      throw new Error("Erro desconhecido");
+    }
+  }
+
+  mapEmpregado(data: IEmpregadoAPI): IDataEmpregado {
+    return {
+      id: data.id_empregado,
+      nome: data.ds_nome,
+      email: data.ds_email,
+      role: data.role,
+      profissao: data.ds_profissao,
+      salario: data.vl_salario,
+      dataContratacao: data.dt_admissao,
+    };
+  }
+
+  mapEmpregadoPostApi(data: IDataEmpregadoForm): IDataPostApi {
+    return {
+      ds_nome: data.nome,
+      dt_nascimento: data.dataNascimento,
+      ds_profissao: data.profissao,
+      ds_email: data.email,
+      vl_salario: data.salario,
+      dt_admissao: data.dataAdmissao,
+      ds_password: data.password,
+      role: data.role,
+      ds_cpf: data.cpf,
+    };
+  }
+
+  async postEmpregado(data: IDataEmpregadoForm): Promise<IDataEmpregado> {
+    const dataPost: IDataPostApi = this.mapEmpregadoPostApi(data);
+    console.log(`Dados chegando: ${data.salario}`);
+    try {
+      const res = await axios.post(this.URLPOST, dataPost);
+
+      return this.mapEmpregado(res?.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new AxiosError(error.response?.data || error.message);
+      }
+
+      throw new Error("Erro desconhecido");
+    }
+  }
+}

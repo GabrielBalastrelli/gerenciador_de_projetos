@@ -1,4 +1,4 @@
-import axios, { AxiosError, isAxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import type {
   IGetProjetoParams,
   IGetProjetoResponse,
@@ -20,8 +20,8 @@ export class Projeto {
 
       return res.data.data;
     } catch (error) {
-      if (isAxiosError(error)) {
-        throw new AxiosError(error.response.data, error.code);
+      if (axios.isAxiosError(error)) {
+        throw new AxiosError(error.response?.data || error.message);
       }
 
       throw new Error("Erro interno 500");
