@@ -1,4 +1,7 @@
 import axios, { AxiosError, isAxiosError } from "axios";
+
+import { useEmpregadoStore } from "../../store/useEmpregadoStore";
+
 import type {
   IDataEmpregado,
   IEmpregadoAPI,
@@ -6,15 +9,15 @@ import type {
 
 export class Empregado {
   private readonly URL = `http://localhost:3000/empregado/email/`;
+  private readonly TOKEN = sessionStorage.getItem("userToken");
 
-  async findEmpregadoEmail(
-    email: string,
-    token: string,
-  ): Promise<IDataEmpregado> {
+  private readonly email: string = useEmpregadoStore((set) => set.email);
+
+  async findEmpregadoEmail(): Promise<IDataEmpregado> {
     try {
-      const res = await axios.get(`${this.URL}${email}`, {
+      const res = await axios.get(`${this.URL}${this.email}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${this.TOKEN}`,
         },
       });
       return this.mapEmpregado(res.data);
