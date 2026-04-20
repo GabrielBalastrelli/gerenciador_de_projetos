@@ -4,7 +4,7 @@ import { Login } from "./pages/page-login/page-login";
 import { CadastroEmpregado } from "./pages/page-cadastro/page-cadastro-empregado";
 import { Home } from "./pages/page-home/page-home";
 import { ConfigEmpregado } from "./pages/confi-empregado/configEmpregado";
-import { Perfil } from "./pages/perfil/perfil";
+import { PerfilEmpregado } from "./pages/perfil-empregado/perfilEmpregado";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/cadastroEmpregado" element={<CadastroEmpregado />} />
         <Route path="/home" element={<Home />} />
         <Route path="/configEmpregado" element={<ConfigEmpregado />} />
-        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/perfilEmpregado" element={<PerfilEmpregado />} />
       </Routes>
     </>
   );
