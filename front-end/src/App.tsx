@@ -3,8 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/page-login/page-login";
 import { CadastroEmpregado } from "./pages/page-cadastro/page-cadastro-empregado";
 import { Home } from "./pages/page-home/page-home";
-import { ConfigEmpregado } from "./pages/confi-empregado/configEmpregado";
+import { ConfigEmpregado } from "./pages/config-empregado/configEmpregado";
 import { PerfilEmpregado } from "./pages/perfil-empregado/perfilEmpregado";
+import { CadastroProjeto } from "./pages/cadastroProjeto/cadastroProjeto";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/configEmpregado" element={<ConfigEmpregado />} />
         <Route path="/perfilEmpregado" element={<PerfilEmpregado />} />
+        <Route path="/cadastroProjeto" element={<CadastroProjeto />} />
       </Routes>
     </>
   );

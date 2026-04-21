@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Projeto } from "../../services/ConsultasProjeto/Projeto";
+import { Projeto } from "../../services/ServiceProjeto/Projeto";
 import { Empregado } from "../../services/ServiceEmpregado/Empregado";
 
 import { CardProjeto } from "../../components/card-projeto/CardProjeto";
@@ -11,7 +11,7 @@ import { NavBar } from "../../components/nav-bar/NavBar";
 import { useEmpregadoStore } from "../../store/useEmpregadoStore";
 
 import type { IDataEmpregado } from "../../interfaces/interface-empregado";
-import type { IGetProjetoResponse } from "../../interfaces/interface-get-projeto";
+import type { IGetProjetoResponse } from "../../interfaces/interface-projeto";
 
 export function Home() {
   const consultasProjetos: Projeto = new Projeto();

@@ -1,4 +1,4 @@
-import type { IGetProjetoResponse } from "../../interfaces/interface-get-projeto";
+import type { IGetProjetoResponse } from "../../interfaces/interface-projeto";
 
 interface CardProjetoProps {
   data: IGetProjetoResponse[];
