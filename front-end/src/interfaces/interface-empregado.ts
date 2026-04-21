@@ -38,6 +38,6 @@ export interface IDataEmpregadoForm {
   salario: number;
   role: string;
   password: string;
-  dataNascimento: Date;
-  dataAdmissao: Date;
+  dataNascimento: string;
+  dataAdmissao: string;
 }

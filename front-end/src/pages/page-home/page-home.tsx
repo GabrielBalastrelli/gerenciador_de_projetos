@@ -24,6 +24,7 @@ export function Home() {
   const [empregado, setEmpregado] = useState<IDataEmpregado | null>(null);
   const [projetos, setProjeto] = useState<IGetProjetoResponse[] | null>(null);
   const [error, setError] = useState(null);
+  const [token, setToken] = useState(sessionStorage.getItem("userToken"));
 
   useEffect(() => {
     if (!email) return;
@@ -45,11 +46,12 @@ export function Home() {
 
   useEffect(() => {
     const fetchProjeto = async () => {
+      if (!token) return;
       try {
         const res = await consultasProjetos.getProjeto({
           limit: 3,
           page: 1,
-          token: sessionStorage.getItem("userToken"),
+          token,
         });
 
         setProjeto(res);
