@@ -12,7 +12,7 @@ export function Login() {
   const [error, setError] = useState("");
   const setEmailStore = useEmpregadoStore((set) => set.setEmail);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (email === "" || password === "") {

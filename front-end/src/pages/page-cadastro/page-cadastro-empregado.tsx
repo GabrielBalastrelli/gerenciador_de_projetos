@@ -48,7 +48,7 @@ export function CadastroEmpregado() {
     try {
       const res = await empregadoService.postEmpregado(data);
       setEmpregado(res);
-    } catch (error: unknown) {
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.errors || ["Erro na requisição"]);
       } else {
@@ -56,6 +56,7 @@ export function CadastroEmpregado() {
       }
     }
   };
+
   useEffect(() => {
     if (empregado && modalRef.current) {
       const modal = new Modal(modalRef.current);
