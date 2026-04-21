@@ -10,6 +10,7 @@ import type {
 } from "../../interfaces/interface-projeto";
 import axios from "axios";
 import { Modal } from "bootstrap";
+import { ProjetoSchema } from "../../shemas-zod/projetoSchema";
 
 export const CadastroProjeto = () => {
   const projetoService = new Projeto();
@@ -39,11 +40,20 @@ export const CadastroProjeto = () => {
     };
 
     try {
-      const res = await projetoService.postProjeto(data);
+      const params = ProjetoSchema.safeParse(data);
+
+      if (!params.success) {
+        const errors = params.error.issues.map((err) => err.message);
+        setError(errors);
+        return;
+      }
+
+      const res = await projetoService.postProjeto(params.data);
       setProjeto(res);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.errors || ["Erro na requisição"]);
+        return;
       } else {
         setError(["Erro inesperado!"]);
       }
