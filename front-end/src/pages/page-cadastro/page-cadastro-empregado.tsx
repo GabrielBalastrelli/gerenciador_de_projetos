@@ -11,6 +11,7 @@ import { Empregado } from "../../services/ServiceEmpregado/Empregado";
 
 import { CardError } from "../../components/card-erro/CardError";
 import { ModalEmpregado } from "../../components/modal-empregado/ModalEmpregado";
+import axios from "axios";
 
 export function CadastroEmpregado() {
   const empregadoService = new Empregado();
@@ -23,14 +24,14 @@ export function CadastroEmpregado() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
-  const [salario, setSalario] = useState(null);
+  const [salario, setSalario] = useState(0);
   const [profissao, setProfissao] = useState("");
   const [role, setRole] = useState("Funcionario");
-  const [dataAdmissao, setDataAdmissao] = useState(new Date());
-  const [dataNascimento, setDataNascimento] = useState(null);
-  const [error, setError] = useState(null);
+  const [dataAdmissao, setDataAdmissao] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [error, setError] = useState<string[] | null>(null);
 
-  const handlerSubmit = async (e) => {
+  const handlerSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data: IDataEmpregadoForm = {
       nome,
@@ -47,11 +48,14 @@ export function CadastroEmpregado() {
     try {
       const res = await empregadoService.postEmpregado(data);
       setEmpregado(res);
-    } catch (error) {
-      setError(error.errors);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.errors || ["Erro na requisição"]);
+      } else {
+        setError(["Erro inesperado!"]);
+      }
     }
   };
-
   useEffect(() => {
     if (empregado && modalRef.current) {
       const modal = new Modal(modalRef.current);

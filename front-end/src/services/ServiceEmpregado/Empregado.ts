@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import { useEmpregadoStore } from "../../store/useEmpregadoStore";
 
@@ -26,7 +26,7 @@ export class Empregado {
       return this.mapEmpregado(res?.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw new AxiosError(error.response?.data || error.message);
+        throw error;
       }
 
       throw new Error("Erro desconhecido");
@@ -48,11 +48,11 @@ export class Empregado {
   mapEmpregadoPostApi(data: IDataEmpregadoForm): IDataPostApi {
     return {
       ds_nome: data.nome,
-      dt_nascimento: data.dataNascimento,
+      dt_nascimento: new Date(data.dataNascimento),
       ds_profissao: data.profissao,
       ds_email: data.email,
       vl_salario: data.salario,
-      dt_admissao: data.dataAdmissao,
+      dt_admissao: new Date(data.dataAdmissao),
       ds_password: data.password,
       role: data.role,
       ds_cpf: data.cpf,
@@ -67,7 +67,7 @@ export class Empregado {
       return this.mapEmpregado(res?.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw new AxiosError(error.response?.data || error.message);
+        throw error; // 👈 só repassa
       }
 
       throw new Error("Erro desconhecido");
