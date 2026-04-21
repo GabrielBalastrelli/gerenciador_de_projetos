@@ -96,7 +96,7 @@ export const NavBar = () => {
                   <li>
                     <NavLink
                       className="dropdown-item"
-                      to="/criarProjeto"
+                      to="/cadastroProjeto"
                       onClick={() => setMenuOpen(false)}
                     >
                       Criar Projeto
@@ -106,7 +106,7 @@ export const NavBar = () => {
                   <li>
                     <NavLink
                       className="dropdown-item"
-                      to="/criarDemanda"
+                      to=""
                       onClick={() => setMenuOpen(false)}
                     >
                       Criar Demanda
