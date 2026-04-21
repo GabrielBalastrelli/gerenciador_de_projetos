@@ -14,6 +14,6 @@ app.use('/demanda', demandaRouter);
 app.use('/projeto', projetoRouter);
 app.use('/empregado', empregadoRouter);
 app.use('/auth', authRouter);
-app.use('/empregado/projeto', empregadoProjetoRouter);
+app.use('/empregadoProjeto', empregadoProjetoRouter);
 
 export default app;
