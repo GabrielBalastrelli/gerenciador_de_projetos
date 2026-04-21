@@ -6,6 +6,8 @@ import { Home } from "./pages/page-home/page-home";
 import { ConfigEmpregado } from "./pages/config-empregado/configEmpregado";
 import { PerfilEmpregado } from "./pages/perfil-empregado/perfilEmpregado";
 import { CadastroProjeto } from "./pages/cadastroProjeto/cadastroProjeto";
+import { CadastroDemanda } from "./pages/cadastro-demanda/cadastro-demanda";
+import { ListarProjetos } from "./pages/listar-projetos/listar-projetos";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/configEmpregado" element={<ConfigEmpregado />} />
         <Route path="/perfilEmpregado" element={<PerfilEmpregado />} />
         <Route path="/cadastroProjeto" element={<CadastroProjeto />} />
+        <Route path="/cadastroDemanda" element={<CadastroDemanda />} />
+        <Route path="/listarProjetos" element={<ListarProjetos />} />
       </Routes>
     </>
   );

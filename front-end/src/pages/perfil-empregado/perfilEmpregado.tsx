@@ -74,6 +74,9 @@ export const PerfilEmpregado = () => {
                 <strong>Nome:</strong> {empregado?.nome}
               </p>
               <p>
+                <strong>ID Empregado:</strong> {empregado?.id}
+              </p>
+              <p>
                 <strong>Email:</strong> {empregado?.email}
               </p>
               <p>

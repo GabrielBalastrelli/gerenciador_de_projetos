@@ -76,7 +76,7 @@ export const NavBar = () => {
             <li className="nav-item">
               <NavLink
                 className="nav-link text-white fw-semibold"
-                to="/projetos"
+                to="/listarProjetos"
               >
                 Projetos
               </NavLink>
