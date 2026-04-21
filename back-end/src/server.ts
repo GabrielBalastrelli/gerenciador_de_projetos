@@ -4,6 +4,7 @@ import demandaRouter from './routes/demanda.route';
 import projetoRouter from './routes/projeto.route';
 import empregadoRouter from './routes/empregado.route';
 import authRouter from './routes/auth.route';
+import empregadoProjetoRouter from './routes/empregadoProjeto.route';
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.use('/demanda', demandaRouter);
 app.use('/projeto', projetoRouter);
 app.use('/empregado', empregadoRouter);
 app.use('/auth', authRouter);
+app.use('/empregado/projeto', empregadoProjetoRouter);
 
 export default app;
