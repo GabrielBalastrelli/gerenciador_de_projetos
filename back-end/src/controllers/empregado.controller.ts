@@ -73,8 +73,6 @@ export default class ControllerEmpregado {
   }
 
   async findAll(req: Request, res: Response, next: NextFunction) {
-    console.log('asdasdad');
-
     try {
       const { page, limit } = schemaPaginacao.parse({
         page: Number(req.query.page),
@@ -88,7 +86,6 @@ export default class ControllerEmpregado {
 
       const empregados = await this.empregado.findAll(page, limit);
 
-      console.log(empregados);
       res.status(200).json({ data: empregados, paginacao });
     } catch (error) {
       next(error);

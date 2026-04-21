@@ -12,6 +12,6 @@ export interface IEmpregadoProjetoRepo {
     data: EmpregadoProjetoData | Partial<EmpregadoProjeto>,
   ): Promise<EmpregadoProjeto>;
   delete(id: string): Promise<void>;
-  findAll(): Promise<EmpregadoProjeto[]>;
+  findAll(page: number, limit: number): Promise<EmpregadoProjeto[]>;
   findId(id: string): Promise<EmpregadoProjeto | null>;
 }
