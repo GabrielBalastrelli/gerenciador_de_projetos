@@ -6,6 +6,10 @@ import { Home } from "./pages/page-home/page-home";
 import { ConfigEmpregado } from "./pages/config-empregado/configEmpregado";
 import { PerfilEmpregado } from "./pages/perfil-empregado/perfilEmpregado";
 import { CadastroProjeto } from "./pages/cadastroProjeto/cadastroProjeto";
+import { CadastroDemanda } from "./pages/cadastro-demanda/cadastro-demanda";
+import { ListarProjetos } from "./pages/listar-projetos/listar-projetos";
+import { VinculoEmpregadoProjeto } from "./pages/vinculo-projeto-empregado/VinculoEmpregadoProjeto";
+import { ProjetoPage } from "./pages/projeto/projeto";
 
 function App() {
   return (
@@ -17,6 +21,13 @@ function App() {
         <Route path="/configEmpregado" element={<ConfigEmpregado />} />
         <Route path="/perfilEmpregado" element={<PerfilEmpregado />} />
         <Route path="/cadastroProjeto" element={<CadastroProjeto />} />
+        <Route path="/cadastroDemanda" element={<CadastroDemanda />} />
+        <Route path="/listarProjetos" element={<ListarProjetos />} />
+        <Route path="/projeto" element={<ProjetoPage />} />
+        <Route
+          path="/VinculoEmpregadoProjeto"
+          element={<VinculoEmpregadoProjeto />}
+        />
       </Routes>
     </>
   );

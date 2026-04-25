@@ -1,6 +1,7 @@
 import { UseEmpregadoProjeto } from '../../src/services/empregadoProjeto';
 import { Request, Response, NextFunction } from 'express';
 import { schemaPaginacao } from '../schema/schemaPaginacao';
+import { schemaEmpregadoProjeto } from '../schema/schemaEmpregadoProjeto';
 
 export class ControllerEmpregadoProjeto {
   private readonly useEmpregadoProjeto = new UseEmpregadoProjeto();
@@ -42,7 +43,14 @@ export class ControllerEmpregadoProjeto {
         limit: Number(req.query.limit),
       });
 
-      const demandas = await this.useEmpregadoProjeto.findAll(page, limit);
+      const { id_empregado, id_projeto } = schemaEmpregadoProjeto.parse({
+        id_empregado: req.query.id_empregado,
+        id_projeto: req.query.id_projeto,
+      });
+
+      const data = { id_empregado, id_projeto };
+
+      const demandas = await this.useEmpregadoProjeto.findAll(data, page, limit);
 
       const paginacao = {
         page,

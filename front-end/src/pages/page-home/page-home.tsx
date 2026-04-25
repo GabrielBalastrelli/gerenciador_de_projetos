@@ -23,11 +23,11 @@ export function Home() {
 
   const [empregado, setEmpregado] = useState<IDataEmpregado | null>(null);
   const [projetos, setProjeto] = useState<IGetProjetoResponse[] | null>(null);
-  const [error, setError] = useState(null);
-  const [token, setToken] = useState(sessionStorage.getItem("userToken"));
+  const [error, setError] = useState<TypeError | null>(null);
 
   useEffect(() => {
     if (!email) return;
+
     const fetchEmpregado = async () => {
       try {
         const res = await consultasEmpregado.findEmpregadoEmail();
@@ -42,16 +42,14 @@ export function Home() {
     };
 
     fetchEmpregado();
-  }, [email]);
+  }, []);
 
   useEffect(() => {
     const fetchProjeto = async () => {
-      if (!token) return;
       try {
-        const res = await consultasProjetos.getProjeto({
+        const res = await consultasProjetos.findProjeto({
           limit: 3,
           page: 1,
-          token,
         });
 
         setProjeto(res);
@@ -75,9 +73,7 @@ export function Home() {
           {empregado && <CardEmpregado data={empregado} />}
           {projetos && <CardProjeto data={projetos} />}
 
-          {error && (
-            <CardError message={error?.message ?? "Erro não identificado!"} />
-          )}
+          {error && <CardError message={error} />}
         </div>
       </div>
     </>

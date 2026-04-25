@@ -1,5 +1,4 @@
 export interface IGetProjetoParams {
-  token: string;
   page: number;
   limit: number;
 }

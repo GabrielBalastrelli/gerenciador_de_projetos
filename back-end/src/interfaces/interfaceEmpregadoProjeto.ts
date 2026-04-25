@@ -4,6 +4,10 @@ export type EmpregadoProjetoData = {
   id_empregado: string;
   id_projeto: string;
 };
+export interface FindEmpregadoProjetoData {
+  id_empregado: string | undefined;
+  id_projeto: string | undefined;
+}
 
 export interface IEmpregadoProjetoRepo {
   create(data: EmpregadoProjetoData | Omit<EmpregadoProjeto, 'id'>): Promise<EmpregadoProjeto>;
@@ -12,6 +16,6 @@ export interface IEmpregadoProjetoRepo {
     data: EmpregadoProjetoData | Partial<EmpregadoProjeto>,
   ): Promise<EmpregadoProjeto>;
   delete(id: string): Promise<void>;
-  findAll(page: number, limit: number): Promise<EmpregadoProjeto[]>;
+  findAll(data: FindEmpregadoProjetoData, page: number, limit: number): Promise<EmpregadoProjeto[]>;
   findId(id: string): Promise<EmpregadoProjeto | null>;
 }

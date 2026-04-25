@@ -10,15 +10,14 @@ import type {
 } from "../../interfaces/interface-empregado";
 
 export class Empregado {
-  private readonly URL = `http://localhost:3000/empregado/email/`;
-  private readonly URLPOST = `http://localhost:3000/empregado`;
+  private readonly URL_BASE = `http://localhost:3000/empregado`;
   private readonly TOKEN = sessionStorage.getItem("userToken");
 
   private readonly email: string = useEmpregadoStore((set) => set.email);
 
   async findEmpregadoEmail(): Promise<IDataEmpregado> {
     try {
-      const res = await axios.get(`${this.URL}${this.email}`, {
+      const res = await axios.get(`${this.URL_BASE}/email/${this.email}`, {
         headers: {
           Authorization: `Bearer ${this.TOKEN}`,
         },
@@ -62,12 +61,32 @@ export class Empregado {
   async postEmpregado(data: IDataEmpregadoForm): Promise<IDataEmpregado> {
     const dataPost: IDataPostApi = this.mapEmpregadoPostApi(data);
     try {
-      const res = await axios.post(this.URLPOST, dataPost);
+      const res = await axios.post(this.URL_BASE, dataPost);
 
       return this.mapEmpregado(res?.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw error; // 👈 só repassa
+        throw error;
+      }
+
+      throw new Error("Erro desconhecido");
+    }
+  }
+
+  async findAllEmpregados(): Promise<IDataEmpregado[]> {
+    try {
+      const res = await axios.get(`${this.URL_BASE}/?page=1&limit=10`, {
+        headers: {
+          Authorization: `Bearer ${this.TOKEN}`,
+        },
+      });
+
+      return res.data.data.map(this.mapEmpregado);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          error.response?.data?.message || "Erro ao buscar empregados",
+        );
       }
 
       throw new Error("Erro desconhecido");

@@ -2,6 +2,7 @@ import { prisma } from '../database/prisma';
 import {
   IEmpregadoProjetoRepo,
   EmpregadoProjetoData,
+  FindEmpregadoProjetoData,
 } from '../interfaces/interfaceEmpregadoProjeto';
 import { EmpregadoProjeto } from '@prisma/client';
 
@@ -34,8 +35,16 @@ export class UseEmpregadoProjeto implements IEmpregadoProjetoRepo {
     });
   }
 
-  async findAll(page: number, limit: number): Promise<EmpregadoProjeto[]> {
+  async findAll(
+    data: FindEmpregadoProjetoData,
+    page: number,
+    limit: number,
+  ): Promise<EmpregadoProjeto[]> {
     return await prisma.empregadoProjeto.findMany({
+      where: {
+        id_empregado: data.id_empregado,
+        id_projeto: data.id_projeto,
+      },
       skip: (page - 1) * limit,
       take: limit,
     });
