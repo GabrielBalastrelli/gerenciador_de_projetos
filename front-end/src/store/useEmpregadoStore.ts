@@ -25,6 +25,7 @@ export const useEmpregadoStore = create<EmpregadoStoreType>()(
     {
       name: "empregado-storage",
       partialize: (state) => ({
+        email: state.email,
         role: state.role,
       }),
     },

@@ -10,13 +10,13 @@ export class Projeto {
   private readonly URL = `http://localhost:3000/projeto`;
   private readonly TOKEN = sessionStorage.getItem("userToken");
 
-  async getProjeto(data: IGetProjetoParams): Promise<IGetProjetoResponse[]> {
+  async findProjeto(data: IGetProjetoParams): Promise<IGetProjetoResponse[]> {
     try {
       const res = await axios.get(
         `${this.URL}?page=${data.page}&limit=${data.limit}`,
         {
           headers: {
-            Authorization: `Bearer ${data.token}`,
+            Authorization: `Bearer ${this.TOKEN}`,
           },
         },
       );
@@ -41,6 +41,25 @@ export class Projeto {
         },
       });
 
+      return this.mapFieldsConvert(res.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          error.response?.data?.message || "Erro ao bucar projeto projeto",
+        );
+      }
+
+      throw new Error("Erro interno 500");
+    }
+  }
+
+  async getProjeto(idProjeto: string): Promise<IGetProjetoResponseConvert> {
+    try {
+      const res = await axios.get(`${this.URL}/${idProjeto}`, {
+        headers: {
+          Authorization: `Bearer ${this.TOKEN}`,
+        },
+      });
       return this.mapFieldsConvert(res.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {

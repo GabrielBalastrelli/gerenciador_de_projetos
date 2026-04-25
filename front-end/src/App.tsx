@@ -8,6 +8,8 @@ import { PerfilEmpregado } from "./pages/perfil-empregado/perfilEmpregado";
 import { CadastroProjeto } from "./pages/cadastroProjeto/cadastroProjeto";
 import { CadastroDemanda } from "./pages/cadastro-demanda/cadastro-demanda";
 import { ListarProjetos } from "./pages/listar-projetos/listar-projetos";
+import { VinculoEmpregadoProjeto } from "./pages/vinculo-projeto-empregado/VinculoEmpregadoProjeto";
+import { ProjetoPage } from "./pages/projeto/projeto";
 
 function App() {
   return (
@@ -21,6 +23,11 @@ function App() {
         <Route path="/cadastroProjeto" element={<CadastroProjeto />} />
         <Route path="/cadastroDemanda" element={<CadastroDemanda />} />
         <Route path="/listarProjetos" element={<ListarProjetos />} />
+        <Route path="/projeto" element={<ProjetoPage />} />
+        <Route
+          path="/VinculoEmpregadoProjeto"
+          element={<VinculoEmpregadoProjeto />}
+        />
       </Routes>
     </>
   );
