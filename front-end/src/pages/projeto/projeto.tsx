@@ -13,6 +13,9 @@ import type { IdataEmpregadoProjetoResponseFInd } from "../../interfaces/interfa
 import type { IDataEmpregado } from "../../interfaces/interface-empregado";
 import { ModalDemandas } from "../../components/modal-demandas/ModalDemandas";
 import { NavBar } from "../../components/nav-bar/NavBar";
+import { Demanda } from "../../services/serviceDemanda/Demanda";
+import type { IDataMappingFront } from "../../interfaces/interface-demanda";
+import { CardDemanda } from "../../components/CardDemanda/CardModal";
 
 export const ProjetoPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +24,9 @@ export const ProjetoPage = () => {
   const [projeto, setProjeto] = useState<IGetProjetoResponseConvert | null>(
     null,
   );
+
   const [empregados, setEmpregados] = useState<IDataEmpregado[]>([]);
+  const [demandas, setDemandas] = useState<IDataMappingFront[]>([]);
 
   const [empregadosProjeto, setEmpregadoProjetos] =
     useState<IdataEmpregadoProjetoResponseFInd | null>(null);
@@ -29,11 +34,22 @@ export const ProjetoPage = () => {
   const projetoServices = new Projeto();
   const empregadoProjeto = new EmpregadoProjeto();
   const EmpregadoService = new Empregado();
-
+  const DemandaServices = new Demanda();
   const location = useLocation();
 
   const idProjeto = location.state?.data;
 
+  useEffect(() => {
+    const fetchDemandas = async () => {
+      try {
+        const res = await DemandaServices.findIdDemandas(idProjeto);
+        setDemandas(res);
+        console.log(res);
+      } catch (error) {}
+    };
+
+    fetchDemandas();
+  }, []);
   const fetchEquipeProjeto = async () => {
     const res = await empregadoProjeto.findEmpregadoProjeto({
       limit: 10,
@@ -214,6 +230,28 @@ export const ProjetoPage = () => {
                   </p>
                 )}
               </div>
+              {demandas.length > 0 ? (
+                <div className="row g-3">
+                  {demandas.map((item) => (
+                    <div className="col-12 col-md-6" key={item.idDemanda}>
+                      <CardDemanda
+                        idDemanda={item.idDemanda}
+                        idProjeto={item.idProjeto}
+                        idEmpregado={item.idEmpregado}
+                        nomeDemanda={item.nomeDemanda}
+                        descricao={item.descricao}
+                        dataInicio={String(item.dataInicio)}
+                        dataFim={String(item.dataFim)}
+                        dataTransacao={String(item.dataTransacao)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted mb-0">
+                  Nenhuma demanda cadastrada neste projeto.
+                </p>
+              )}
               <ModalEmpregadoProjeto
                 show={showModal}
                 idProjeto={idProjeto}

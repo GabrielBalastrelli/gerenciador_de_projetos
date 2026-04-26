@@ -48,4 +48,10 @@ export class UseDemanda implements IDemandaRepo {
       where: { id_demanda: idDemanda },
     });
   }
+
+  async findIProjeto(idProjeto: string): Promise<Demanda[]> {
+    return await prisma.demanda.findMany({
+      where: { id_projeto: idProjeto },
+    });
+  }
 }

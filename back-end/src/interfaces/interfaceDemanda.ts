@@ -15,4 +15,5 @@ export interface IDemandaRepo {
   delete(idDemanda: string): Promise<void>;
   findAll(page: number, limit: number): Promise<Demanda[]>;
   findId(idDemanda: string): Promise<Demanda | null>;
+  findIProjeto(idProjeto: string): Promise<Demanda[]>;
 }

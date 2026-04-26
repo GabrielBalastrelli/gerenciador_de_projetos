@@ -62,4 +62,22 @@ export default class ControllerDemanda {
       next(error);
     }
   }
+
+  async findIProjeto(req: Request<{ idProjeto: string }>, res: Response, next: NextFunction) {
+    try {
+      const { idProjeto } = req.params;
+
+      const demandas = await this.demandaService.findIProjeto(idProjeto);
+
+      if (!demandas || demandas.length === 0) {
+        return res.status(404).json({
+          message: 'Nenhuma demanda encontrada para este projeto',
+        });
+      }
+
+      res.status(200).json(demandas);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
