@@ -133,6 +133,7 @@ export const ProjetoPage = () => {
             </div>
             <ModalEmpregadoProjeto
               show={showModal}
+              idProjeto={idProjeto}
               onClose={() => setShowModal(false)}
               onAdd={(idEmpregado) => {
                 console.log("  em pregado:", idEmpregado);

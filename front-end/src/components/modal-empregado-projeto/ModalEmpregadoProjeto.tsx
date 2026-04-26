@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import type { IDataEmpregado } from "../../interfaces/interface-empregado";
 import { Empregado } from "../../services/ServiceEmpregado/Empregado";
 import { CardError } from "../../components/card-erro/CardError";
+import { EmpregadoProjeto } from "../../services/ServiceEmpregadoProjeto/EmpregadoProjeto";
+import { id } from "zod/v4/locales";
 
 interface ModalEmpregadoProjetoProps {
   show: boolean;
+  idProjeto: string;
   onClose: () => void;
   onAdd: (idEmpregado: string) => void;
 }
 
 export const ModalEmpregadoProjeto = ({
   show,
+  idProjeto,
   onClose,
   onAdd,
 }: ModalEmpregadoProjetoProps) => {
@@ -19,6 +23,7 @@ export const ModalEmpregadoProjeto = ({
   const [error, setError] = useState<string | null>(null);
 
   const empregadoService = new Empregado();
+  const empregadoProjetoService = new EmpregadoProjeto();
 
   useEffect(() => {
     if (!show) return;
@@ -29,7 +34,6 @@ export const ModalEmpregadoProjeto = ({
         setError(null);
 
         const res = await empregadoService.findAllEmpregados();
-        console.log(res);
         setEmpregados(res);
       } catch (error) {
         if (error instanceof Error) {
@@ -44,6 +48,21 @@ export const ModalEmpregadoProjeto = ({
 
     fetchEmpregados();
   }, [show]);
+
+  const handlePostEmpregadoProjeto = async (idEmpregado: string) => {
+    try {
+      const res = await empregadoProjetoService.postEmpregadoProjeto({
+        id_empregado: idEmpregado,
+        id_projeto: idProjeto,
+      });
+
+      console.log(res);
+      onAdd(idEmpregado);
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (!show) return null;
 
@@ -91,7 +110,6 @@ export const ModalEmpregadoProjeto = ({
                     key={item.id}
                     className="border rounded-4 p-3 d-flex align-items-center justify-content-between flex-wrap gap-3"
                   >
-                    {/* Foto + Nome */}
                     <div className="d-flex align-items-center gap-3">
                       <img
                         src="https://i.pravatar.cc/120"
@@ -107,10 +125,9 @@ export const ModalEmpregadoProjeto = ({
                       </div>
                     </div>
 
-                    {/* Botão */}
                     <button
                       className="btn btn-primary rounded-pill px-4"
-                      onClick={() => onAdd(item.id)}
+                      onClick={() => handlePostEmpregadoProjeto(item.id)}
                     >
                       Adicionar
                     </button>
@@ -120,7 +137,6 @@ export const ModalEmpregadoProjeto = ({
             )}
           </div>
 
-          {/* Footer */}
           <div className="modal-footer border-0 pt-0">
             <button
               className="btn btn-light rounded-pill px-4"
