@@ -17,7 +17,7 @@ empregadoProjetoRouter.use(
 
 empregadoProjetoRouter.use(authController.middlewareValidaToken.bind(authController));
 empregadoProjetoRouter.post('/', controller.create.bind(controller));
-empregadoProjetoRouter.delete('/:id', controller.create.bind(controller));
+empregadoProjetoRouter.delete('/:id', controller.delete.bind(controller));
 empregadoProjetoRouter.put('/:id', controller.update.bind(controller));
 empregadoProjetoRouter.get('/', controller.findAll.bind(controller));
 empregadoProjetoRouter.get('/:id', controller.findId.bind(controller));

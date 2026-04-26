@@ -59,4 +59,20 @@ export class EmpregadoProjeto {
       throw new Error("ERRO DESCONHECIDO");
     }
   }
+
+  async deleteEmpregado(id: string): Promise<void> {
+    try {
+      await axios.delete(`${this.URL}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.TOKEN}`,
+        },
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(error.message);
+      }
+
+      throw new Error("ERRO DESCONHECIDO");
+    }
+  }
 }
