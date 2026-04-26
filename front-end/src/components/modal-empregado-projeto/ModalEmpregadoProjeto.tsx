@@ -3,7 +3,6 @@ import type { IDataEmpregado } from "../../interfaces/interface-empregado";
 import { Empregado } from "../../services/ServiceEmpregado/Empregado";
 import { CardError } from "../../components/card-erro/CardError";
 import { EmpregadoProjeto } from "../../services/ServiceEmpregadoProjeto/EmpregadoProjeto";
-import { id } from "zod/v4/locales";
 
 interface ModalEmpregadoProjetoProps {
   show: boolean;
@@ -48,6 +47,13 @@ export const ModalEmpregadoProjeto = ({
 
     fetchEmpregados();
   }, [show]);
+
+  useEffect(() => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handlePostEmpregadoProjeto = async (idEmpregado: string) => {
     try {

@@ -8,7 +8,9 @@ import type {
 
 export class EmpregadoProjeto {
   private readonly URL: string = `http://localhost:3000/empregadoProjeto`;
+
   private readonly TOKEN: string | null = sessionStorage.getItem("userToken");
+
   async postEmpregadoProjeto(
     data: IDataEmpregadoProjeto,
   ): Promise<IDataEmpregadoProjetoResponsePost> {
@@ -33,23 +35,28 @@ export class EmpregadoProjeto {
   ): Promise<IdataEmpregadoProjetoResponseFInd> {
     try {
       const res = await axios.get(
-        `${this.URL}id_empregado=${data.id_empregado}&id_projeto=${data.id_projeto}&page=${data.page}&limit=${data.limit}`,
+        `http://localhost:3000/empregadoProjeto?page=${data.page}&limit=${data.limit}`,
         {
           headers: {
-            Authorization: this.TOKEN,
+            Authorization: `Bearer ${this.TOKEN}`,
           },
         },
       );
 
-      return res.data;
+      return {
+        data: res.data.data.map((item: any) => ({
+          id: item.id,
+          idEmpregado: item.id_empregado,
+          idProjeto: item.id_projeto,
+        })),
+        paginacao: res.data.paginacao,
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(error.message);
       }
+
       throw new Error("ERRO DESCONHECIDO");
     }
   }
 }
-
-//id_empregado=&id_projeto=page=1&limit=1
-//,
