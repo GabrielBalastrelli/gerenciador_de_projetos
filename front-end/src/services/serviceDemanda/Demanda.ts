@@ -15,7 +15,11 @@ export class Demanda {
   ): Promise<IDataMappingFront> {
     try {
       const dataPost = this.convertForDataApi(data);
-      const res = await axios.post(`${this.URL_BASE}`, dataPost);
+      const res = await axios.post(`${this.URL_BASE}`, dataPost, {
+        headers: {
+          Authorization: `Bearer ${this.TOKEN}`,
+        },
+      });
 
       return this.convertForFrontEndData(res.data);
     } catch (error) {
@@ -64,8 +68,8 @@ export class Demanda {
       id_empregado: data.idEmpregado,
       ds_nome: data.nomeDemanda,
       ds_descricao: data.descricao,
-      dt_inicio: data.dataInicio,
-      dt_fim: data.dataFim,
+      dt_inicio: new Date(data.dataInicio),
+      dt_fim: new Date(data.dataFim),
     };
   }
 }

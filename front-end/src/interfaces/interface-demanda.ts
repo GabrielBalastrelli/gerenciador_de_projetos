@@ -4,7 +4,7 @@ export interface IDataPostDemanda {
   ds_nome: string;
   ds_descricao: string;
   dt_inicio: Date;
-  dt_fim: Date | null;
+  dt_fim: Date;
 }
 
 export interface IDataResponse {
@@ -23,8 +23,8 @@ export interface IDataConvertPostResponse {
   idEmpregado: string;
   nomeDemanda: string;
   descricao: string;
-  dataInicio: Date;
-  dataFim: Date;
+  dataInicio: string;
+  dataFim: string;
 }
 
 export interface IDataMappingFront {

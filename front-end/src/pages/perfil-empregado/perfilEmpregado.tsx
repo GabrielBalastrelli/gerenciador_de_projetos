@@ -16,7 +16,7 @@ export const PerfilEmpregado = () => {
   useEffect(() => {
     const fetchEmpregado = async () => {
       try {
-        const res = await empregadoService.findEmpregadoEmail();
+        const res = await empregadoService.findEmpregadoEmail("");
         setEmpregado(res);
       } catch (err: any) {
         setError(err?.message || "Erro interno!");
