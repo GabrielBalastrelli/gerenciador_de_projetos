@@ -31,13 +31,22 @@ export const ProjetoPage = () => {
 
   const idProjeto = location.state?.data;
 
+  const fetchEquipeProjeto = async () => {
+    const res = await empregadoProjeto.findEmpregadoProjeto({
+      limit: 10,
+      page: 1,
+    });
+
+    setEmpregadoProjetos(res);
+  };
+
   useEffect(() => {
     const fetchEmpregadoProjeto = async () => {
       const res = await empregadoProjeto.findEmpregadoProjeto({
         limit: 10,
         page: 1,
       });
-      console.log(res);
+
       setEmpregadoProjetos(res);
     };
 
@@ -46,13 +55,12 @@ export const ProjetoPage = () => {
 
   useEffect(() => {
     if (!empregadosProjeto) return;
-    console.log(empregadosProjeto.data);
     const fetchEmpregado = async () => {
       const lista = [];
 
       for (const item of empregadosProjeto.data) {
         const res = await EmpregadoService.findEmpregadoId(item.idEmpregado);
-        lista.push(res);
+        lista.push({ ...res, idProjetoEmpregado: item.id });
       }
 
       setEmpregados(lista);
@@ -79,6 +87,20 @@ export const ProjetoPage = () => {
       fetchProjeto();
     }
   }, [idProjeto]);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await empregadoProjeto.deleteEmpregado(id);
+
+      await fetchEquipeProjeto();
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro ao deletar o empregado.");
+      }
+    }
+  };
 
   return (
     <div className="container py-4">
@@ -164,6 +186,12 @@ export const ProjetoPage = () => {
                         <h6 className="fw-bold mb-1">{item.nome}</h6>
                         <p className="text-muted mb-1">{item.email}</p>
                         <small className="text-secondary">ID: {item.id}</small>
+                        <button
+                          className="btn btn-primary rounded-pill mt-2 px-4"
+                          onClick={() => handleDelete(item.idProjetoEmpregado)}
+                        >
+                          Remover do Projeto
+                        </button>
                       </div>
                     </div>
                   ))}
