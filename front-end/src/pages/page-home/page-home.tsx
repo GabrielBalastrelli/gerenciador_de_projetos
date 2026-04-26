@@ -17,27 +17,34 @@ export function Home() {
   const consultasProjetos: Projeto = new Projeto();
   const consultasEmpregado: Empregado = new Empregado();
 
-  const setNomeStore = useEmpregadoStore((set) => set.setNome);
   const email = useEmpregadoStore((set) => set.email);
+  const setNomeStore = useEmpregadoStore((set) => set.setNome);
   const setRole = useEmpregadoStore((set) => set.setRole);
+  const setEmail = useEmpregadoStore((set) => set.setEmail);
+  const setIdEmpregado = useEmpregadoStore((set) => set.setId);
 
   const [empregado, setEmpregado] = useState<IDataEmpregado | null>(null);
   const [projetos, setProjeto] = useState<IGetProjetoResponse[] | null>(null);
-  const [error, setError] = useState<TypeError | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!email) return;
 
     const fetchEmpregado = async () => {
       try {
-        const res = await consultasEmpregado.findEmpregadoEmail();
-
+        const res = await consultasEmpregado.findEmpregadoEmail("");
+        setIdEmpregado(res.id);
+        setEmail(res.email);
         setNomeStore(res.nome);
         setRole(res.role);
+
         setEmpregado(res);
       } catch (error) {
-        setError(error);
-        return;
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Erro ao consultar o empregado.");
+        }
       }
     };
 
@@ -54,8 +61,11 @@ export function Home() {
 
         setProjeto(res);
       } catch (error) {
-        setError(error);
-        return;
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Erro ao deletar o empregado.");
+        }
       }
     };
 

@@ -15,5 +15,5 @@ export const ProjetoSchema = z.object({
 
   dt_inicio: z.date("A data de Inicío é obrigatória!"),
 
-  dt_fim: z.date("A data de Inicío é obrigatória!"),
+  dt_fim: z.date("A data de Fim é obrigatória!"),
 });
