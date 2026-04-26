@@ -49,6 +49,27 @@ export class Demanda {
     }
   }
 
+  async findIdDemandas(idProjeto: string): Promise<IDataMappingFront[]> {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/demanda/projeto/${idProjeto}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.TOKEN}`,
+          },
+        },
+      );
+
+      return res.data.map(this.convertForFrontEndData);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw error;
+      }
+
+      throw new Error("Erro desconhecido");
+    }
+  }
+
   convertForFrontEndData(data: IDataResponse): IDataMappingFront {
     return {
       idDemanda: data.id_demanda,

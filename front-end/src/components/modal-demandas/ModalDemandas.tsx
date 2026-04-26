@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useEmpregadoStore } from "../../store/useEmpregadoStore";
 
 import { Demanda } from "../../services/serviceDemanda/Demanda";
@@ -43,7 +43,6 @@ export const ModalDemandas = ({ idProjetoProp, setOpen, open }: Props) => {
 
     try {
       const res = await DemandaServices.postDemanda(data.data);
-      console.log(res);
       setOpen(false);
     } catch (error) {}
   };
