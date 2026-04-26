@@ -37,7 +37,6 @@ export class Empregado {
 
   async findEmpregadoId(id: string): Promise<IDataEmpregado> {
     try {
-      console.log(id);
       const res = await axios.get(`${this.URL_BASE}/${id}`, {
         headers: {
           Authorization: `Bearer ${this.TOKEN}`,
