@@ -30,3 +30,10 @@ export interface IGetProjetoResponseConvert {
   dataFim: string;
   dataTransacao: string;
 }
+
+export interface IFindProjetoResponse {
+  data: IGetProjetoResponse[];
+  total: number;
+  page: number;
+  limit: number;
+}

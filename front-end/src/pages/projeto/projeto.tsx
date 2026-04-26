@@ -44,12 +44,12 @@ export const ProjetoPage = () => {
       try {
         const res = await DemandaServices.findIdDemandas(idProjeto);
         setDemandas(res);
-        console.log(res);
       } catch (error) {}
     };
 
     fetchDemandas();
   }, []);
+
   const fetchEquipeProjeto = async () => {
     const res = await empregadoProjeto.findEmpregadoProjeto({
       limit: 10,
