@@ -6,17 +6,60 @@ import { CardError } from "../../components/card-erro/CardError";
 
 import { ModalEmpregadoProjeto } from "../../components/modal-empregado-projeto/ModalEmpregadoProjeto";
 
+import { EmpregadoProjeto } from "../../services/ServiceEmpregadoProjeto/EmpregadoProjeto";
+import { Empregado } from "../../services/ServiceEmpregado/Empregado";
+
+import type { IdataEmpregadoProjetoResponseFInd } from "../../interfaces/interface-empregado-projeto";
+import type { IDataEmpregado } from "../../interfaces/interface-empregado";
+
 export const ProjetoPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projeto, setProjeto] = useState<IGetProjetoResponseConvert | null>(
     null,
   );
+  const [empregados, setEmpregados] = useState<IDataEmpregado[]>([]);
+
+  const [empregadosProjeto, setEmpregadoProjetos] =
+    useState<IdataEmpregadoProjetoResponseFInd | null>(null);
 
   const projetoServices = new Projeto();
+  const empregadoProjeto = new EmpregadoProjeto();
+  const EmpregadoService = new Empregado();
+
   const location = useLocation();
 
   const idProjeto = location.state?.data;
+
+  useEffect(() => {
+    const fetchEmpregadoProjeto = async () => {
+      const res = await empregadoProjeto.findEmpregadoProjeto({
+        limit: 10,
+        page: 1,
+      });
+      console.log(res);
+      setEmpregadoProjetos(res);
+    };
+
+    fetchEmpregadoProjeto();
+  }, []);
+
+  useEffect(() => {
+    if (!empregadosProjeto) return;
+    console.log(empregadosProjeto.data);
+    const fetchEmpregado = async () => {
+      const lista = [];
+
+      for (const item of empregadosProjeto.data) {
+        const res = await EmpregadoService.findEmpregadoId(item.idEmpregado);
+        lista.push(res);
+      }
+
+      setEmpregados(lista);
+    };
+
+    fetchEmpregado();
+  }, [empregadosProjeto]);
 
   useEffect(() => {
     const fetchProjeto = async () => {
@@ -100,7 +143,7 @@ export const ProjetoPage = () => {
                     <span className="text-muted d-block">
                       Empregados Vinculados
                     </span>
-                    <strong>{projeto.empregados?.length || 0}</strong>
+                    <strong>{empregados?.length || 0}</strong>
                   </div>
                 </div>
               </div>
@@ -113,9 +156,9 @@ export const ProjetoPage = () => {
                 <h4 className="fw-bold mb-0">Equipe do Projeto</h4>
               </div>
 
-              {projeto.empregados?.length > 0 ? (
+              {empregados?.length > 0 ? (
                 <div className="row g-3">
-                  {projeto.empregados.map((item: any) => (
+                  {empregados.map((item: any) => (
                     <div className="col-12 col-md-6 col-xl-4" key={item.id}>
                       <div className="border rounded-4 p-3 h-100">
                         <h6 className="fw-bold mb-1">{item.nome}</h6>

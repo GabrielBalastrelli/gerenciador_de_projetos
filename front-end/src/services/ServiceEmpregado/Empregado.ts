@@ -15,14 +15,36 @@ export class Empregado {
 
   private readonly email: string = useEmpregadoStore((set) => set.email);
 
-  async findEmpregadoEmail(): Promise<IDataEmpregado> {
+  async findEmpregadoEmail(email: string): Promise<IDataEmpregado> {
     try {
-      const res = await axios.get(`${this.URL_BASE}/email/${this.email}`, {
+      const res = await axios.get(
+        `${this.URL_BASE}/email/${this.email ?? email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.TOKEN}`,
+          },
+        },
+      );
+      return this.mapEmpregado(res?.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw error;
+      }
+
+      throw new Error("Erro desconhecido");
+    }
+  }
+
+  async findEmpregadoId(id: string): Promise<IDataEmpregado> {
+    try {
+      console.log(id);
+      const res = await axios.get(`${this.URL_BASE}/${id}`, {
         headers: {
           Authorization: `Bearer ${this.TOKEN}`,
         },
       });
-      return this.mapEmpregado(res?.data);
+
+      return this.mapEmpregado(res.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error;
