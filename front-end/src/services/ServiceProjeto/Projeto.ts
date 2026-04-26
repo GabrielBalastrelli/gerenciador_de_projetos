@@ -1,16 +1,17 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import type {
   IDataProjetoParams,
+  IFindProjetoResponse,
   IGetProjetoParams,
   IGetProjetoResponse,
   IGetProjetoResponseConvert,
 } from "../../interfaces/interface-projeto";
 
 export class Projeto {
-  private readonly URL = `http://localhost:3000/projeto`;
+  private readonly URL = "http://localhost:3000/projeto";
   private readonly TOKEN = sessionStorage.getItem("userToken");
 
-  async findProjeto(data: IGetProjetoParams): Promise<IGetProjetoResponse[]> {
+  async findProjeto(data: IGetProjetoParams): Promise<IFindProjetoResponse> {
     try {
       const res = await axios.get(
         `${this.URL}?page=${data.page}&limit=${data.limit}`,
@@ -21,10 +22,15 @@ export class Projeto {
         },
       );
 
-      return res.data.data;
+      return {
+        data: res.data.data,
+        total: res.data.total,
+        page: res.data.page,
+        limit: res.data.limit,
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw new AxiosError(error.response?.data || error.message);
+        throw new Error(error.response?.data?.message || error.message);
       }
 
       throw new Error("Erro interno 500");
@@ -45,7 +51,7 @@ export class Projeto {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message || "Erro ao bucar projeto projeto",
+          error.response?.data?.message || "Erro ao criar projeto",
         );
       }
 
@@ -60,11 +66,12 @@ export class Projeto {
           Authorization: `Bearer ${this.TOKEN}`,
         },
       });
+
       return this.mapFieldsConvert(res.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          error.response?.data?.message || "Erro ao criar projeto",
+          error.response?.data?.message || "Erro ao buscar projeto",
         );
       }
 

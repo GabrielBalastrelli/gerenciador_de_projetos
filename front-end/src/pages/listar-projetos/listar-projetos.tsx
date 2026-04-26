@@ -4,42 +4,61 @@ import { Projeto } from "../../services/ServiceProjeto/Projeto";
 import type { IGetProjetoResponse } from "../../interfaces/interface-projeto";
 import { CardProjeto } from "../../components/card-projeto/CardProjeto";
 import { CardError } from "../../components/card-erro/CardError";
+import { Pagination } from "../../components/pagination/Pagination";
 
 export const ListarProjetos = () => {
   const consultasProjetos = useMemo(() => new Projeto(), []);
 
-  const [projetos, setProjetos] = useState<IGetProjetoResponse[] | null>(null);
-  const [error, setError] = useState(null);
+  const [projetos, setProjetos] = useState<IGetProjetoResponse[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(1);
+
+  const limite = 10;
 
   useEffect(() => {
     const fetchProjeto = async () => {
-      const token: string | null = sessionStorage.getItem("userToken");
-
-      if (!token) return;
-
       try {
         const res = await consultasProjetos.findProjeto({
-          limit: 10,
-          page: 1,
+          page: paginaAtual,
+          limit: limite,
         });
 
-        setProjetos(res);
+        setProjetos(res.data);
+        setTotalPaginas(Math.ceil(res.total / limite));
       } catch (error) {
-        setError(error);
-        return;
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Erro ao buscar projetos");
+        }
       }
     };
 
     fetchProjeto();
-  }, []);
+  }, [paginaAtual, consultasProjetos]);
 
   return (
     <>
       <NavBar />
-      <div style={{ paddingTop: "80px" }} className="container">
-        <h1 className="text-center mt-2">Lista de projetos da Empresa</h1>
-        {projetos && <CardProjeto data={projetos} />}
+
+      <div className="container" style={{ paddingTop: "80px" }}>
+        <h1 className="text-center mb-4">Lista de projetos da Empresa</h1>
+
         {error && <CardError message={error} />}
+
+        {projetos.length > 0 && (
+          <>
+            <CardProjeto data={projetos} />
+
+            <Pagination
+              paginaAtual={paginaAtual}
+              totalPaginas={totalPaginas}
+              onChange={setPaginaAtual}
+            />
+          </>
+        )}
       </div>
     </>
   );
