@@ -10,5 +10,6 @@
     "types": ["jest", "node"],
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "node_modules"]
 }
