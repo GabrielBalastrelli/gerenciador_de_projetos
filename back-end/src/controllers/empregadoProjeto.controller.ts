@@ -1,4 +1,4 @@
-import { UseEmpregadoProjeto } from '../../src/services/empregadoProjeto';
+import { UseEmpregadoProjeto } from '../services/empregadoProjeto';
 import { Request, Response, NextFunction } from 'express';
 import { schemaPaginacao } from '../schema/schemaPaginacao';
 import { schemaEmpregadoProjeto } from '../schema/schemaEmpregadoProjeto';
