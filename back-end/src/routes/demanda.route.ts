@@ -9,7 +9,7 @@ const authController = new ControllerAuth();
 
 demandaRouter.use(
   cors({
-    origin: ' "https://gerenciador-de-projetos-1-5b64.onrender.com"',
+    origin: 'https://gerenciador-de-projetos-1-5b64.onrender.com',
     credentials: true,
   }),
 );
