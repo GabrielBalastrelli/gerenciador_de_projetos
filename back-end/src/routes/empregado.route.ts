@@ -1,13 +1,10 @@
 import { Router } from 'express';
 import ControllerEmpregado from '../controllers/empregado.controller';
 import { ControllerAuth } from '../controllers/auth.controller';
-import cors from 'cors';
 
 const empregadoRouter = Router();
 const controller = new ControllerEmpregado();
 const authController = new ControllerAuth();
-
- 
 
 empregadoRouter.post('/', controller.create.bind(controller));
 

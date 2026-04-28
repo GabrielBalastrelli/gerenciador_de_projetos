@@ -8,8 +8,6 @@ const empregadoProjetoRouter = Router();
 const controller = new ControllerEmpregadoProjeto();
 const authController = new ControllerAuth();
 
- 
-
 empregadoProjetoRouter.use(authController.middlewareValidaToken.bind(authController));
 empregadoProjetoRouter.post('/', controller.create.bind(controller));
 empregadoProjetoRouter.delete('/:id', controller.delete.bind(controller));
