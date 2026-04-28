@@ -8,7 +8,7 @@ export async function authLogin(
   const URL: string = import.meta.env.VITE_API_URL;
 
   try {
-    const req = await axios.post(URL, {
+    const req = await axios.post(`${URL}/auth`, {
       ds_email: email,
       ds_password: password,
     });
