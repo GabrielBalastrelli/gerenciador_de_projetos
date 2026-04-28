@@ -67,7 +67,6 @@ class ControllerEmpregado {
         }
     }
     async findAll(req, res, next) {
-        console.log('asdasdad');
         try {
             const { page, limit } = schemaPaginacao_1.schemaPaginacao.parse({
                 page: Number(req.query.page),
@@ -78,7 +77,6 @@ class ControllerEmpregado {
                 limit,
             };
             const empregados = await this.empregado.findAll(page, limit);
-            console.log(empregados);
             res.status(200).json({ data: empregados, paginacao });
         }
         catch (error) {
@@ -103,7 +101,7 @@ class ControllerEmpregado {
             const { ds_email } = req.params;
             const empregado = await this.empregado.findByEmail(ds_email);
             if (!empregado) {
-                res.status(401).json({ message: 'Não foi encontrado empregado com esse e-mail.' });
+                res.status(404).json({ message: 'Não foi encontrado empregado com esse e-mail.' });
             }
             res.status(200).json(empregado);
         }

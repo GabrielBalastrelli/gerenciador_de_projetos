@@ -22,8 +22,15 @@ class UseEmpregadoProjeto {
             where: { id: id },
         });
     }
-    async findAll() {
-        return await prisma_1.prisma.empregadoProjeto.findMany();
+    async findAll(data, page, limit) {
+        return await prisma_1.prisma.empregadoProjeto.findMany({
+            where: {
+                id_empregado: data.id_empregado,
+                id_projeto: data.id_projeto,
+            },
+            skip: (page - 1) * limit,
+            take: limit,
+        });
     }
     async findId(id) {
         return await prisma_1.prisma.empregadoProjeto.findUnique({
