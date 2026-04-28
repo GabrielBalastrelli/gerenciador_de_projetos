@@ -7,16 +7,7 @@ const demandaRouter = Router();
 const controller = new ControllerDemanda();
 const authController = new ControllerAuth();
 
-demandaRouter.use(
-  cors({
-     origin: [
-      'http://localhost:5173',
-      'https://gerenciador-de-projetos-1-5b64.onrender.com'
-    ],
-    credentials: true,
-  }),
-);
-
+ 
 demandaRouter.use(authController.middlewareValidaToken.bind(authController));
 
 demandaRouter.post('/', controller.create.bind(controller));
