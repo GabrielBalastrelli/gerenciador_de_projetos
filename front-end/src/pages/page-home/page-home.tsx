@@ -59,7 +59,7 @@ export function Home() {
           page: 1,
         });
 
-        setProjeto(res);
+        setProjeto(res.data);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);

@@ -10,7 +10,6 @@ type DemandaProps = {
 };
 
 export const CardDemanda = ({
-  idDemanda,
   idProjeto,
   idEmpregado,
   nomeDemanda,

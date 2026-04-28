@@ -1,9 +1,5 @@
-import { useState } from "react";
 import { NavBar } from "../../components/nav-bar/NavBar";
 export const VinculoEmpregadoProjeto = () => {
-  const [email, setEmail] = useState<string | null>(null);
-  const [nomeProjeto, setNomeProjeto] = useState<string | null>(null);
-
   return (
     <>
       <NavBar />

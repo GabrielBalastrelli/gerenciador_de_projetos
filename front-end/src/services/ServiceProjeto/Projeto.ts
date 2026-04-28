@@ -8,7 +8,7 @@ import type {
 } from "../../interfaces/interface-projeto";
 
 export class Projeto {
-  private readonly URL = "http://localhost:3000/projeto";
+  private readonly URL = import.meta.env.VITE_API_URL;
   private readonly TOKEN = sessionStorage.getItem("userToken");
 
   async findProjeto(data: IGetProjetoParams): Promise<IFindProjetoResponse> {

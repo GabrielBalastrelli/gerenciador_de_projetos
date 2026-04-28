@@ -7,7 +7,7 @@ import type {
 } from "../../interfaces/interface-empregado-projeto";
 
 export class EmpregadoProjeto {
-  private readonly URL: string = `http://localhost:3000/empregadoProjeto`;
+  private readonly URL: string = import.meta.env.VITE_API_URL;
 
   private readonly TOKEN: string | null = sessionStorage.getItem("userToken");
 

@@ -5,7 +5,7 @@ export async function authLogin(
   email: string,
   password: string,
 ): Promise<IAuthValidation> {
-  const URL: string = `http://localhost:3000/auth`;
+  const URL: string = import.meta.env.VITE_API_URL;
 
   try {
     const req = await axios.post(URL, {

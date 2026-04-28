@@ -26,8 +26,8 @@ export function CadastroEmpregado() {
   const [cpf, setCpf] = useState("");
   const [salario, setSalario] = useState(0);
   const [profissao, setProfissao] = useState("");
-  const [role, setRole] = useState("Funcionario");
-  const [dataAdmissao, setDataAdmissao] = useState("");
+  const [role] = useState("Funcionario");
+  const [dataAdmissao] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [error, setError] = useState<string[] | null>(null);
 

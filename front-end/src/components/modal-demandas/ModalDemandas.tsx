@@ -42,7 +42,7 @@ export const ModalDemandas = ({ idProjetoProp, setOpen, open }: Props) => {
     }
 
     try {
-      const res = await DemandaServices.postDemanda(data.data);
+      await DemandaServices.postDemanda(data.data);
       setOpen(false);
     } catch (error) {}
   };

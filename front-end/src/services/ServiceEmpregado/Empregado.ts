@@ -10,7 +10,7 @@ import type {
 } from "../../interfaces/interface-empregado";
 
 export class Empregado {
-  private readonly URL_BASE = `http://localhost:3000/empregado`;
+  private readonly URL_BASE = import.meta.env.VITE_API_URL;
   private readonly TOKEN = sessionStorage.getItem("userToken");
 
   private readonly email: string = useEmpregadoStore((set) => set.email);
