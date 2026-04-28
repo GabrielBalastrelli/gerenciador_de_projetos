@@ -42,12 +42,12 @@ class ControllerProjeto {
                 page: Number(req.query.page),
                 limit: Number(req.query.limit),
             });
-            const demandas = await this.projeto.findAll(limit, page);
+            const projeto = await this.projeto.findAll(limit, page);
             const paginacao = {
                 page,
                 limit,
             };
-            return res.status(200).json({ data: demandas, paginacao });
+            return res.status(200).json({ data: projeto, paginacao });
         }
         catch (error) {
             next(error);

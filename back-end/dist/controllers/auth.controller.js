@@ -19,9 +19,20 @@ class ControllerAuth {
                 return;
             }
             const token = this.authService.gerarToken(empregado.id_empregado, empregado.ds_email, empregado.role);
-            res
-                .status(200)
-                .json({ status: 200, success: true, token, message: 'Login Realizado com Sucesso!' });
+            const infoEmpregado = {
+                nome: empregado.ds_nome,
+                role: empregado.role,
+                profissao: empregado.ds_profissao,
+                email: empregado.ds_email,
+                dataContratacao: empregado.dt_admissao,
+            };
+            res.status(200).json({
+                status: 200,
+                success: true,
+                token,
+                infoEmpregado,
+                message: 'Login Realizado com Sucesso!',
+            });
             return;
         }
         catch (error) {

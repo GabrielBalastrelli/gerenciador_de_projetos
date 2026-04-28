@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const demanda_1 = require("../services/demanda");
+const schemaPaginacao_1 = require("../schema/schemaPaginacao");
 class ControllerDemanda {
     constructor() {
         this.demandaService = new demanda_1.UseDemanda();
@@ -36,7 +37,11 @@ class ControllerDemanda {
     }
     async findAll(req, res, next) {
         try {
-            const demandas = await this.demandaService.findAll();
+            const { page, limit } = schemaPaginacao_1.schemaPaginacao.parse({
+                page: Number(req.query.page),
+                limit: Number(req.query.limit),
+            });
+            const demandas = await this.demandaService.findAll(page, limit);
             res.status(200).json(demandas);
         }
         catch (error) {
@@ -51,6 +56,21 @@ class ControllerDemanda {
                 return res.status(404).json({ message: 'Demanda não encontrada' });
             }
             res.status(200).json(demanda);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async findIProjeto(req, res, next) {
+        try {
+            const { idProjeto } = req.params;
+            const demandas = await this.demandaService.findIProjeto(idProjeto);
+            if (!demandas || demandas.length === 0) {
+                return res.status(404).json({
+                    message: 'Nenhuma demanda encontrada para este projeto',
+                });
+            }
+            res.status(200).json(demandas);
         }
         catch (error) {
             next(error);

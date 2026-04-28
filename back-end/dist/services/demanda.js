@@ -33,12 +33,20 @@ class UseDemanda {
             where: { id_demanda: idDemanda },
         });
     }
-    async findAll() {
-        return await prisma_1.prisma.demanda.findMany();
+    async findAll(page, limit) {
+        return await prisma_1.prisma.demanda.findMany({
+            skip: (page - 1) * limit,
+            take: limit,
+        });
     }
     async findId(idDemanda) {
         return await prisma_1.prisma.demanda.findUnique({
             where: { id_demanda: idDemanda },
+        });
+    }
+    async findIProjeto(idProjeto) {
+        return await prisma_1.prisma.demanda.findMany({
+            where: { id_projeto: idProjeto },
         });
     }
 }

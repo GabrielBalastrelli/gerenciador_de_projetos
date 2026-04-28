@@ -7,7 +7,7 @@ const controler = new ControllerAuth();
 
 authRouter.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ' "https://gerenciador-de-projetos-1-5b64.onrender.com"',
     credentials: true,
   }),
 );
