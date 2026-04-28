@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import type {
   IDataPostDemanda,
   IDataResponse,
@@ -7,7 +8,8 @@ import type {
 } from "../../interfaces/interface-demanda";
 
 export class Demanda {
-  private readonly URL_BASE: string = `http://localhost:3000/demanda`;
+  private readonly API_URL = import.meta.env.VITE_API_URL;
+  private readonly URL_BASE: string = `${this.API_URL}/demanda`;
   private readonly TOKEN = sessionStorage.getItem("userToken");
 
   async postDemanda(
