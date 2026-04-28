@@ -7,16 +7,7 @@ const projetoRouter = Router();
 const controller = new ControllerProjeto();
 const authController = new ControllerAuth();
 
-projetoRouter.use(
-  cors({
-     origin: [
-      'http://localhost:5173',
-      'https://gerenciador-de-projetos-1-5b64.onrender.com'
-    ],
-    credentials: true,
-  }),
-);
-
+ 
 projetoRouter.use(authController.middlewareValidaToken.bind(authController));
 projetoRouter.post('/', controller.create.bind(controller));
 projetoRouter.delete('/:id', controller.create.bind(controller));
